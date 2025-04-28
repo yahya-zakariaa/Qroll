@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (min-width: 640px) {
+    
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Largest devices such as desktops (1280px and up) */
+@media only screen and (min-width: 1280px) {
+
+}
+
+.box {
+    width: 300px;
+    height: 300px;
+    position: relative;
+  }
+  
+  .corner {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 3px solid red;
+  }
+  
+  .top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  .bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .scan-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(122, 9, 9);
+    font-size: 18px;
+    padding: 0 10px;
+  }
+  
+  .qr-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  /* .css-1usuzwp-MuiButtonBase-root-MuiTab-root.Mui-selected{
+    background-color: blueviolet;
+    color: white;
+    text-decoration: none;
+
+  }
+  .css-1gsv261{
+
+  }
+
+  .css-1usuzwp-MuiButtonBase-root-MuiTab-root{
+    border: 3px solid #161C39 ;
+    background-color: brown;
+  }
+  .css-1usuzwp-MuiButtonBase-root-MuiTab-root{
+    border: 4px solid red;
+  } */
