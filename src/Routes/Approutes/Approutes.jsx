@@ -20,7 +20,7 @@ import Addnewstudentteacher from '../../padges/Dashboard/TeacherDashboard/Addnew
 import Filterbysection from '../../padges/Dashboard/TeacherDashboard/Filterbysection/Filterbysection'
 import Sectionattentencereport from '../../padges/Dashboard/TeacherDashboard/Sectionattentencereport/Sectionattentencereport'
 import Sectionfinalreport from '../../padges/Dashboard/TeacherDashboard/Sectionfinalreport/Sectionfinalreport'
-import Excessiveabsencestudents from '../../padges/Dashboard/TeacherDashboard/excessiveabsencestudents/excessiveabsencestudents'
+
 import Profilestudent from '../../padges/Dashboard/StudentDashboard/Profilestudent/Profilestudent'
 import Changepassworedstudent from '../../padges/Dashboard/StudentDashboard/Changepassworedstudent/Changepassworedstudent'
 import Coursesstudent from '../../padges/Dashboard/StudentDashboard/Coursesstudent/Coursesstudent'
@@ -42,8 +42,7 @@ import Sectionfilterdocter from '../../padges/Dashboard/DoctorDashboard/Sectionf
 import Lecturesfilterdoctoer from '../../padges/Dashboard/DoctorDashboard/Lecturesfilterdoctoer/Lecturesfilterdoctoer'
 import Finalsectiondoctoer from '../../padges/Dashboard/DoctorDashboard/Finalsectiondoctoer/Finalsectiondoctoer'
 import Finalleturesdoctoer from '../../padges/Dashboard/DoctorDashboard/Finalleturesdoctoer/Finalleturesdoctoer'
-
-
+import Excessiveabsencestudent from '../../padges/Dashboard/TeacherDashboard/Excessiveabsencestudent/Excessiveabsencestudent'
 export default function Approutes() {
   return (
     <div>
@@ -113,7 +112,8 @@ export default function Approutes() {
         <Route  path="/teacher-dashboard/coursestecher/filterbysection/sectionattentencereport" element={<Sectionattentencereport/>}  />
         <Route  path="/teacher-dashboard/coursestecher/Sectionfinalreport" element={<Sectionfinalreport/>}  />
         <Route  path="/teacher-dashboard/coursestecher/Sectionfinalreport" element={<Sectionfinalreport/>}  />
-        <Route  path="/teacher-dashboard/coursestecher/excessiveabsencestudents" element={<Excessiveabsencestudents/>}  />
+        <Route  path="/teacher-dashboard/coursestecher/excessiveabsencestudents" element={<Excessiveabsencestudent/>}  />
+
         </Route>
         
                 
