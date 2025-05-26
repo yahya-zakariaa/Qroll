@@ -1,4 +1,5 @@
-
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import React, { useState } from 'react';
 import left from '../../../../assets/Chevron left.png'
 import right from '../../../../assets/Chevron right.png'
@@ -26,16 +27,62 @@ const items = [
   ];
 export default function Sectionattenddocter() {
       const [currentPage, setCurrentPage] = useState(1);
+      const [filteredItems, setFilteredItems] = useState(items);
+      const [searchTerm, setSearchTerm] = useState("");
                                 const pageSize = 9;
                               
-                                const totalPages = Math.ceil(items.length / pageSize);
-                                const currentItems = items.slice(
+                                const totalPages = Math.ceil(filteredItems.length / pageSize);
+                                const currentItems = filteredItems.slice(
                                   (currentPage - 1) * pageSize,
                                   currentPage * pageSize
                                 );
+                                
                               
                                 const handlePageChange = (page) => {
                                   setCurrentPage(page);
+                                };
+                            
+                                const handleSearch = () => {
+                                  const filtered = items.filter((item) =>
+                                    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    item.studentId.includes(searchTerm)
+                                  );
+                                  setFilteredItems(filtered);
+                                  setCurrentPage(1); // نبدأ من أول صفحة بعد البحث
+                                };
+                                const handleKeyDown = (e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault(); // يمنع الريلود
+                                    handleSearch();
+                                  }
+                                };
+                                const exportToExcel = () => {
+                                  const exportData = filteredItems.map(({ id, name, studentId ,numberabsence ,lecturesnumbers, percentage  }) => ({
+                                    ID: id,
+                                    Name: name,
+                                    StudentID: studentId,
+                                    numberabsence:numberabsence,
+                                    lecturesnumbers:lecturesnumbers,
+                                    percentage:percentage
+
+                                   
+        
+                                  }));
+                                
+                                  const worksheet = XLSX.utils.json_to_sheet(exportData);
+                                  const workbook = XLSX.utils.book_new();
+                                  XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+                                
+                                  const excelBuffer = XLSX.write(workbook, {
+                                    bookType: "xlsx",
+                                    type: "array",
+                                  });
+                                
+                                  const dataBlob = new Blob([excelBuffer], {
+                                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+                                  });
+                                
+                                  saveAs(dataBlob, "students.xlsx");
                                 };
   return (
      <div>
@@ -47,8 +94,8 @@ export default function Sectionattenddocter() {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
             </div>
-            <input type="search" id="default-search" className="block w-full p-4 text-sm text-gray-900 border border-gray-300 max-md:w-[100%] rounded-lg ps-10 bg-gray-50 " placeholder="Search Mockups, Logos..." required />
-            <button  className="text-white absolute end-[2px] bottom-[2px]  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-4 ">Search</button>
+            <input  onChange={(e) => setSearchTerm(e.target.value)}  onKeyDown={handleKeyDown}  type="search" id="default-search" className="block w-full p-4 text-sm text-gray-900 border border-gray-300 max-md:w-[100%] rounded-lg ps-10 bg-gray-50 " placeholder="Search Mockups, Logos..." required />
+            <button onClick={handleSearch} className="text-white absolute end-[2px] bottom-[2px]  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-4 ">Search</button>
         </div>
             </div>
         
@@ -85,7 +132,7 @@ export default function Sectionattenddocter() {
             </table>
           </div>
           <div className='flex justify-end  max-md:justify-center mt-1 '>
-                              <button className='border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11'>import from excel sheet</button>
+                              <button  onClick={exportToExcel} className='border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11'>import from excel sheet</button>
                            
           
                            </div>

@@ -1,109 +1,161 @@
-import React, { useEffect, useState } from 'react'
-import imge1 from '../../../assets/465541941_1115304710376060_7367626225223365144_n 1.png'
-import img2 from '../../../assets/logo.png'
-import img3 from '../../../assets/Group 252.png'
-import img8 from '../../../assets/Vector.png' 
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import imge1 from "../../../assets/465541941_1115304710376060_7367626225223365144_n 1.png";
+import img2 from "../../../assets/logo.png";
+import img3 from "../../../assets/Group 252.png";
+import img8 from "../../../assets/Vector.png";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import toast from "react-hot-toast";
+import useAuthStore from "../../../store/useAuthStore";
 
-const validUsers = {
-    admin: "admin@gmail.com",
-    doctor: "doctor@gmail.com",
-    student: "student@gmail.com",
-    teacher: "teacher@gmail.com",
-  };
-  const validPassword = "123456";
-
+const role = {
+  admin: "1",
+  doctor: "2",
+  teacher: "3",
+  student: "4",
+};
 
 export default function Login() {
-    const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-
+  const navigate = useNavigate();
+  const { login, error } = useAuthStore();
+  const [userRole, setUserRole] = useState("");
+  const [Error, setError] = useState("");
 
   useEffect(() => {
+    setError("");
     const userType = localStorage.getItem("userType");
+    setUserRole(userType);
     if (!userType) {
       setError("No user type selected. Please go back and select a user type.");
+    }
+    if (error) {
+      setError(error);
     }
   }, []);
 
-  const handleLogin = () => {
-    const userType = localStorage.getItem("userType");
-  
-    if (!userType) {
-      setError("No user type selected. Please go back and select a user type.");
-      return;
-    }
-  
-    if (email !== validUsers[userType]) {
-      setError("Invalid email for the selected user type.");
-      return;
-    }
-  
-    if (password !== validPassword) {
-      setError("Incorrect password.");
-      return;
-    }
-  
-   
-    localStorage.setItem("token", "your-auth-token"); 
-    navigate(`/${userType}-dashboard`); 
+  const handleLogin = async (data) => {
+    data.role_id = role[userRole];
+
+    console.log(data);
+
+    await toast
+      .promise(login(data), {
+        loading: "Logging in",
+        success: "Login success",
+        error: (err) => err || "something want worng !",
+      })
+      .then((res) => {
+        if (res) return navigate(`/${res.role}-dashboard`);
+      });
   };
 
+  const validationSchema = Yup.object({
+    email: Yup.string("email must be a string").required(
+      "email is required fiald"
+    ),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .max(24, "password must be max legnth is 24 chart")
+      .required("Password is required"),
+  });
 
-  
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: handleLogin,
+  });
+
   return (
-    <div>
-   <div className='flex w-full '>
-           <div className='w-1/2 '>
-               <img className='m-5 h-[690px]  max-md:hidden'  src={imge1} width={"90%"}  alt="" />
-   
-           </div>
-   
-   
-   
-   
-           <div className='md:w-1/2 m-5  '>
-               <div className='flex md:justify-around max-md:justify-center max-md:mr-24 max-md:mt-2 ' >
-                   <img className='h-10 max-md:h-10 ' src={img2} alt="" />
-                   <img className='h-5   max-[800px]:hidden' src={img3} width={"20%"}  alt="" />
-               </div>
-               <div className='md:mt-48 max-md:mt-10 text-center '>
-                   <p className='text-xl text-center max-md:mr-16'>login to your account</p>
-                  
-                   <div className='m-5 '>
-                    <div className="mx-auto md:w-[700px] max-md:w-[400px] ">
-  <div className="md:mb-5 max-md:mr-10 ">
-    <label htmlFor="email" className="block mb-2 text-xl text-gray-900 font- text-start"> email</label>
-    <input type="email"  value={email}
-        onChange={(e) => setEmail(e.target.value)} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block md:w-full  p-2.5 max-md:w-[95%] max-md:mr-6    focus:ring-1 focus:outline-none h-12" placeholder="name@flowbite.com" required />
-  </div>
-  <div className="md:mb-5  max-md:mr-10">
-    <label htmlFor="password" className="block mb-2 text-xl text-gray-900 text-start"> password</label>
-    <input type="password" value={password}
-        onChange={(e) => setPassword(e.target.value)} id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-400 block md:w-full p-2.5 max-md:w-[95%] max-md:mr-6   focus:ring-1 focus:outline-none  h-12"  placeholder="******************" required />
-  </div>
-  {error && <p className="text-red-500">{error}</p>}
-  <div className='flex justify-center m-16'>
-                       <div className='max-md:mr-14'>
-                       <button onClick={handleLogin} className='flex justify-center align-content-center bg-[#161B39] md:w-[700px] md:p-[13px] max-md:p-[6px] max-md:w-[350px] rounded-[12px] ' >
-                           <span className='mr-5 text-white'>Login</span>  
-                            <img src={img8}   alt="" /> 
-                       </button>
-                      
-                       </div>
-                    </div>
-                    </div>
-      
-                   </div>
-                  
-               </div>
-               
-   
-           </div>
-       </div>
+    <div className="flex w-full h-screen o flex-col justify-start items-center  md:overflow-hidden  ">
+      <nav className="flex justify-between md:px-16 items-center w-full  px-10 py-5 ">
+        <img className="w-[30%] md:w-[200px]" src={img2} alt="" />
+
+        <img className="w-[35%] md:w-[200px] " src={img3} alt="" />
+      </nav>
+
+      <div className="container flex items-center justify-center">
+        <div className="w-[45%] h-full hidden md:flex justify-center px-16 items-center ">
+          <img className=" w-full h-[600px]  " src={imge1} alt="" />
+        </div>
+
+        <div className="flex flex-col flex-1 md:items-start items-center md:mt-0 mt-24 justify-center  ">
+          <h1 className="text-3xl text-start  font-medium mb-12 ">
+            login to your account
+          </h1>
+
+          <div className="md:w-[80%] w-[90%] flex items-center justify-start h-full">
+            <form onSubmit={formik.handleSubmit} className="mx-auto w-full ">
+              <div className="md:mb-5  w-full">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-xl text-gray-900 font- text-start"
+                >
+                  {" "}
+                  email
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  id="email"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block md:w-full  p-2.5 w-full     focus:ring-1 focus:outline-none h-12"
+                  placeholder="name@flowbite.com"
+                  required
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <p className="text-red-500 text-md font-medium mt-3">
+                    {formik.errors.email}
+                  </p>
+                )}
+              </div>
+              <div className="md:mb-5 w-full  ">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-xl text-gray-900 text-start"
+                >
+                  {" "}
+                  password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  id="password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-400 block md:w-full p-2.5 w-full    focus:ring-1 focus:outline-none  h-12"
+                  placeholder="******************"
+                  required
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <p className="text-red-500 text-sm font-medium mt-3">
+                    {formik.errors.password}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex justify-center mt-5 w-full">
+                <button
+                  type="submit"
+                  className="flex justify-center items-center w-full rounded-lg py-2.5  bg-[#161B39] "
+                >
+                  <span className="mr-5 text-white">Login</span>
+                  <img src={img8} alt="" />
+                </button>
+              </div>
+              {Error && (
+                <p className="text-red-500 text-sm font-medium ">{Error}</p>
+              )}
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
