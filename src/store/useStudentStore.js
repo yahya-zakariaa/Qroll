@@ -42,5 +42,20 @@ const useStudentStore = create((set) => ({
       throw message;
     }
   },
+  scanLectureQr: async (data) => {
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    try {
+      const res = await axios.post(
+        "https://your-backend.com/student/lecture-attendance/scan",
+        formData
+      );
+      console.log(res);
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("scan qr Error:", message);
+      throw message;
+    }
+  },
 }));
 export default useStudentStore;
