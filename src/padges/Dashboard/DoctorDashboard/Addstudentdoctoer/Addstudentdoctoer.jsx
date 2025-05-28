@@ -1,11 +1,27 @@
 import React from "react";
 import "simple-datatables/dist/style.css";
-import icon1 from "../../../../assets/Chevron right.png";
-import back from "../../../../assets/Frame 129.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import useDoctorStore from "../../../../store/useDoctorStore";
 export default function Addstudentdoctoer() {
   const navigate = useNavigate();
-
+  const { id } = useParams();
+  const { addStudentToCourse } = useDoctorStore();
+  const handleSubmit = async (data) => {
+    data.id = id;
+    try {
+      const res = await addStudentToCourse(data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const formik = useFormik({
+    initialValues: {
+      academic_id: "",
+    },
+    onSubmit: handleSubmit,
+  });
   return (
     <div>
       <div className="lg:flex items-center  lg:justify-between ">
@@ -38,24 +54,8 @@ export default function Addstudentdoctoer() {
         </div>
       </div>
 
-      <div className="mx-[5%]">
-        <div className="mb-5 w-[95%] ">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 "
-          >
-            {" "}
-            Student's full name{" "}
-          </label>
-          <input
-            type="password"
-            id="Name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   focus:ring-1 focus:outline-none h-12 "
-            placeholder="Mohamed Ahmed"
-            required
-          />
-        </div>
-        <div className="mb-5 w-[95%]  ">
+      <form onSubmit={formik.handleSubmit} className="mx-[5%] mt-16 md:w-[50%]">
+        <div className="mb-10 w-[95%]  ">
           <label
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 "
@@ -63,20 +63,27 @@ export default function Addstudentdoctoer() {
             academic ID{" "}
           </label>
           <input
-            type="password"
+            type="text"
             id="Name"
+            name="academic_id"
+            value={formik.values.academic_id}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   focus:ring-1 focus:outline-none h-12 "
             placeholder="801256479 "
             required
           />
         </div>
-        <div className=" w-[95%] m-auto flex justify-center ">
-          <button className="bg-[#161B39] text-white text-xl w-[191px] h-[49px] rounded-[12px]">
+        <div className=" w-[95%]  flex justify-center ">
+          <button
+            type="submit"
+            className="bg-[#161B39] text-white text-xl w-[191px] h-[49px] rounded-[12px]"
+          >
             {" "}
             Add{" "}
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

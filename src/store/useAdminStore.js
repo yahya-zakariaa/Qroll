@@ -433,6 +433,28 @@ const useAdminStore = create((set) => ({
       throw message;
     }
   },
+  getLectures: async (id) => {
+    try {
+      const res = await axios.get(`courses/${id}/lectures`);
+      console.log(res);
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  getSections: async () => {
+    try {
+      const res = await axios.get("/sections");
+      console.log(res);
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
 }));
 
 export default useAdminStore;

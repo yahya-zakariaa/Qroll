@@ -98,7 +98,7 @@ export default function DynamicCourse() {
 
             <li>
               <Link
-                to="/admin-dashboard/courses/filter"
+                to={`/admin-dashboard/courses/${id}/filter`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">

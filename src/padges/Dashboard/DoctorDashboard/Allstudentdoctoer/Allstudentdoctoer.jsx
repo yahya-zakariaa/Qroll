@@ -43,7 +43,7 @@ export default function Allstudentdoctoer() {
   useEffect(() => {
     fetchStudents(courseId);
     console.log(students);
-  }, [courseId]);
+  }, [students?.length]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -121,7 +121,11 @@ export default function Allstudentdoctoer() {
             <i className="fa-solid fa-plus" />
             <p
               className="p-2"
-              onClick={() => navigate(`/doctor-dashboard/courses/${courseId}/students/add-student`)}
+              onClick={() =>
+                navigate(
+                  `/doctor-dashboard/courses/${courseId}/students/add-student`
+                )
+              }
             >
               Add new student{" "}
             </p>

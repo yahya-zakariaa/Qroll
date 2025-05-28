@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "../api/axios";
 
-const useDoctorStore = create((set) => ({
+const useTeacherStore = create((set) => ({
   getProfile: async (token) => {
     try {
       const res = await axios.get("/profile", {
@@ -53,35 +53,6 @@ const useDoctorStore = create((set) => ({
       throw message;
     }
   },
-  createLecture: async ({ name, courseId }) => {
-    try {
-      console.log(courseId, name);
-
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("course_id", courseId);
-
-      const res = await axios.post("/lectures", formData);
-      console.log(res);
-
-      return res.data?.data;
-    } catch (error) {
-      const message = error.response?.data?.message || error.message;
-      console.error("Create Lecture Error:", message);
-      throw message;
-    }
-  },
-  getLectures: async (id) => {
-    try {
-      const res = await axios.get(`courses/${id}/lectures`);
-      console.log(res);
-      return res.data.data;
-    } catch (error) {
-      const message = error.response?.data?.message || error.message;
-      console.error("Create Lecture Error:", message);
-      throw message;
-    }
-  },
   getSections: async () => {
     try {
       const res = await axios.get("/sections");
@@ -89,13 +60,31 @@ const useDoctorStore = create((set) => ({
       return res.data.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
-      console.error("Create Lecture Error:", message);
+      console.error("get Sections Error:", message);
       throw message;
     }
   },
-  addStudentToCourse: async ({ academic_id, id }) => {
+  createSection: async ({ name, courseId }) => {
     try {
-      const res = await axios.post(`courses/${id}/add-student`, {
+      console.log(courseId, name);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("course_id", courseId);
+
+      const res = await axios.post("/sections", formData);
+      console.log(res);
+
+      return res.data?.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Section Error:", message);
+      throw message;
+    }
+  },
+  addStudentToSection: async ({ academic_id, id }) => {
+    try {
+      const res = await axios.post(`/teacher/sections/${id}/add-student`, {
         academic_id,
       });
       return res.data.data;
@@ -106,4 +95,4 @@ const useDoctorStore = create((set) => ({
     }
   },
 }));
-export default useDoctorStore;
+export default useTeacherStore;

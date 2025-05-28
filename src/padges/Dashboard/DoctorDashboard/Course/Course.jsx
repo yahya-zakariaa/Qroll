@@ -82,7 +82,7 @@ export default function coursessdoctoer() {
 
             <li>
               <Link
-                to="/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
+                to={`/doctor-dashboard/courses/${id}/filter`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">

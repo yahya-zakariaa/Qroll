@@ -1,14 +1,41 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useAdminStore from "./../../../../store/useAdminStore";
 
 export default function Filter() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [lectures, setLectures] = useState([]);
+  const [sections, setSections] = useState([]);
+  const { getLectures, getSections } = useAdminStore();
 
+  const fetchLectures = async () => {
+    try {
+      const res = await getLectures(id);
+      setLectures(res);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchSections = async () => {
+    try {
+      const res = await getSections();
+      setSections(res);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchLectures();
+    fetchSections();
+  }, []);
   return (
     <div>
-      <div className="flex items-center gap-3 md:m-10 max-md:m-3">
+      <div className="flex gap-3 md:m-10 max-md:m-3 items-center">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/doctor-dashboard/coursessdoctoer")}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />
@@ -16,23 +43,27 @@ export default function Filter() {
         </button>
         <h1 className="text-[#71717A] ">COURCES </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A] "> view all </h1>
+        <h1 className="text-[#71717A] "> CS </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A] "> HTML </h1>
-        <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A] "> filter by </h1>
+        <h1 className="text-[#71717A] "> section attendance </h1>
       </div>
       <div>
         <h2 className="text-xl ">sections</h2>
-        <div className="flex flex-wrap gap-4 mt-8 ">
-          <button
-            onClick={() =>
-              navigate("/admin-dashboard/courses/filter/filltersectionadmin")
-            }
-            className="w-[20%] h-14 border-[1px] border-[#161B39] text-[#161B39] rounded-[7px]"
-          >
-            section 1
-          </button>
+        <div className="flex flex-wrap gap-4 mt-8 font-medium text-lg ">
+          {sections?.length > 0
+            ? sections?.map((s) => (
+                <button
+                  onClick={() =>
+                    navigate(
+                      "/doctor-dashboard/coursessdoctoer/sectionfilterdocter"
+                    )
+                  }
+                  className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"
+                >
+                  {s.name}
+                </button>
+              ))
+            : "No Sections"}
         </div>
       </div>
 
@@ -40,15 +71,21 @@ export default function Filter() {
 
       <div>
         <h2 className="text-xl ">lectures</h2>
-        <div className="flex flex-wrap gap-4 mt-8 ">
-          <button
-            onClick={() =>
-              navigate("/admin-dashboard/courses/filter/fillterletureadmin")
-            }
-            className="w-[20%] h-14 border-[1px] border-[#161B39] text-[#161B39] rounded-[7px]"
-          >
-            lectures 1
-          </button>
+        <div className="flex flex-wrap gap-4 mt-8 text-lg font-medium">
+          {lectures?.length > 0
+            ? lectures?.map((l) => (
+                <button
+                  onClick={() =>
+                    navigate(
+                      "/doctor-dashboard/coursessdoctoer/lecturesfilterdoctoer"
+                    )
+                  }
+                  className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"
+                >
+                  {l.name}
+                </button>
+              ))
+            : "No Lectures"}
         </div>
       </div>
     </div>

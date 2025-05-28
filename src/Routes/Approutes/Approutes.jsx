@@ -179,7 +179,7 @@ export default function Approutes() {
               element={<Sectionattenddocteradmin />}
             />
             <Route
-              path="/admin-dashboard/courses/filter"
+              path="/admin-dashboard/courses/:id/filter"
               element={<Filter />}
             />
             <Route
@@ -235,7 +235,7 @@ export default function Approutes() {
               element={<Veiwabsentdoctoer />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
+              path="/doctor-dashboard/courses/:id/filter"
               element={<Filterletureeorsectiondoctoer />}
             />
             <Route
@@ -300,7 +300,7 @@ export default function Approutes() {
             <Route index element={<TeacherDashboard />} />
             <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
             <Route
-              path="/teacher-dashboard/profileteacher"
+              path="/teacher-dashboard/profile"
               element={<Profileteacher />}
             />
             <Route
@@ -308,23 +308,23 @@ export default function Approutes() {
               element={<Changepasswred />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher"
+              path="/teacher-dashboard/courses/:id"
               element={<Coursestecher />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/qrcodeteacher"
+              path="/teacher-dashboard/courses/:id/qr-code"
               element={<Qrcodeteacher />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/allstudentteacher"
+              path="/teacher-dashboard/courses/:id/students"
               element={<Allstudentteacher />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/addnewstudentteacher"
+              path="/teacher-dashboard/courses/:id/add-student"
               element={<Addnewstudentteacher />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/filterbysection"
+              path="/teacher-dashboard/courses/:id/sections"
               element={<Filterbysection />}
             />
             <Route
