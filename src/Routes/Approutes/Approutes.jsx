@@ -267,15 +267,15 @@ export default function Approutes() {
               element={<Changepassworedstudent />}
             />
             <Route
-              path="/student-dashboard/coursesstudent"
+              path="/student-dashboard/courses/:id"
               element={<Coursesstudent />}
             />
             <Route
-              path="/student-dashboard/coursesstudent/scanqrcodestudent"
+              path="/student-dashboard/courses/:id/scan-qr"
               element={<Scanqrcodestudent />}
             />
             <Route
-              path="/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee"
+              path="/student-dashboard/courses/:id/scan-done"
               element={<Scanerdonee />}
             />
             <Route

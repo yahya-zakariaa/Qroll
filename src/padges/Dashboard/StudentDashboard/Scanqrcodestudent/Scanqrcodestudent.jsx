@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 export default function Scanqrcodestudent() {
   const navigate = useNavigate();
   const [cameraAvailable, setCameraAvailable] = useState(true);
@@ -16,19 +18,47 @@ export default function Scanqrcodestudent() {
     }
 
     if (cameraAvailable) {
-      const scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+      const scanner = new Html5QrcodeScanner("reader", {
+        fps: 10,
+        qrbox: 250,
+      });
 
       scanner.render(
-        (decodedText) => {
-          if (
-            decodedText.startsWith("section_") ||
-            decodedText.startsWith("lecture_")
-          ) {
-            navigate(
-              "/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee"
-            );
-          } else {
-            alert("كود مش صحيح 👀");
+        async (decodedText) => {
+          try {
+            const data = JSON.parse(decodedText);
+
+            // تأكد إن فيه البيانات المطلوبة
+            if (
+              data.section_id &&
+              data.course_id &&
+              data.timestamp &&
+              data.signature
+            ) {
+              const formData = new FormData();
+              formData.append("data", JSON.stringify(data));
+
+              await axios.post(
+                "https://your-backend.com/student/lecture-attendance/scan",
+                formData,
+                {
+                  headers: {
+                    Accept: "application/json",
+                    // Authorization: `Bearer ${token}`,  // لو فيه توكن
+                  },
+                }
+              );
+
+              // لو كل شيء تمام
+              navigate(
+                "/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee"
+              );
+            } else {
+              alert("الكود غير صالح أو ناقص.");
+            }
+          } catch (error) {
+            alert("كود غير صالح أو غير مفهوم 👀");
+            console.error("Scan error:", error);
           }
         },
         (error) => {
@@ -59,24 +89,22 @@ export default function Scanqrcodestudent() {
         <h1 className="text-[#71717A] "> scan QR code </h1>
       </div>
       <div>
-        <div>
-          <div className="flex flex-col items-center p-4">
-            <h1 className="mb-4 text-xl font-bold">
-              Make sure you allow your camera
-            </h1>
-            {cameraAvailable ? (
-              <div id="reader" className="w-full max-w-md"></div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <button
-                  onClick={() => alert("Upload image functionality here")}
-                  className="bg-[#161B39] w-56 h-15 text-white flex justify-center items-center gap-2"
-                >
-                  <span className="text-white">Upload QR Image</span>
-                </button>
-              </div>
-            )}
-          </div>
+        <div className="flex flex-col items-center p-4">
+          <h1 className="mb-4 text-xl font-bold">
+            Make sure you allow your camera
+          </h1>
+          {cameraAvailable ? (
+            <div id="reader" className="w-full max-w-md"></div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <button
+                onClick={() => alert("Upload image functionality here")}
+                className="bg-[#161B39] w-56 h-15 text-white flex justify-center items-center gap-2"
+              >
+                <span className="text-white">Upload QR Image</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

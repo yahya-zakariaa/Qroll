@@ -8,40 +8,26 @@ import useTeacherStore from "../../../../store/useTeacherStore";
 export default function Qrcodeteacher() {
   const [isOpen, setIsOpen] = useState(false);
   const { id: courseId } = useParams();
-  const { createSection, getSections } = useTeacherStore();
+  const { createSection, getSections, generateQr } = useTeacherStore();
   const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
   const [qrVisible, setQrVisible] = useState(false);
   const [qrData, setQrData] = useState("");
   const [sections, setSections] = useState([]);
-
-  const handleSelectQr = (section) => {
-    const qrPayload = {
-      SectionId: section.id,
-      courseId: section.course.id,
-      name: section.name,
-      generatedAt: new Date().toISOString(),
-    };
-    setQrData(JSON.stringify(qrPayload));
-    setQrVisible(true);
+  const getQrCode = async (id) => {
+    try {
+      const res = await generateQr(id);
+      setQrData(res);
+      setQrVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleCreateSection = async () => {
     try {
       const name = `Section ${new Date().getTime()}`;
-
       const section = await createSection({ name, courseId });
-
-      if (section) {
-        const qrPayload = {
-          sectionId: section.id,
-          courseId: section.course_id,
-          name: section.name,
-          generatedAt: new Date().toISOString(),
-        };
-
-        setQrData(JSON.stringify(qrPayload));
-        setQrVisible(true);
-      }
+      getQrCode(section.id);
     } catch (err) {
       console.error("Error in handleCreateSection:", err);
     } finally {
@@ -52,6 +38,7 @@ export default function Qrcodeteacher() {
     try {
       const res = await getSections(courseId);
       setSections(res);
+
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -84,7 +71,10 @@ export default function Qrcodeteacher() {
               <button
                 type="button"
                 className="w-full  flex items-center cursor-pointer md:w-[51%] max-md:w-[95%] p-2 border-[1px] border-[#A1A1A1] text-gray-900 rounded-lg "
-                onClick={toggleSidebar}
+                onClick={() => {
+                  toggleSidebar();
+                  setQrVisible(false);
+                }}
               >
                 <span className="flex-1 text-start text-[#A1A1A1]  whitespace-nowrap">
                   {" "}
@@ -120,7 +110,7 @@ export default function Qrcodeteacher() {
                 </li>
                 {sections?.map((s) => (
                   <li
-                    onClick={() => handleSelectQr(s)}
+                    onClick={() => getQrCode(s.id)}
                     className="flex items-center md:w-[51%] max-md:w-[95%] p-2 cursor-pointer border-[1px] border-[#A1A1A1] text-gray-900 transition duration-75 rounded-lg   "
                   >
                     <span className="inline-flex items-center justify-center px-2 text-sm font-medium "></span>
@@ -133,10 +123,12 @@ export default function Qrcodeteacher() {
             </li>
           </ul>
         </div>
-        <div className=" md:w-[40%] w-full   text-center flex items-center justify-center  ">
+        <div className=" md:w-[45%] w-full   text-center flex items-center justify-start  ">
           {qrVisible && (
             <div className=" w-fit flex flex-col justify-center items-center me-20  ">
-              <h3 className="text-xl text-center md:mb-5 mb-0 ">section QR code</h3>
+              <h3 className="text-xl text-center md:mb-5 mb-0 ">
+                section QR code
+              </h3>
 
               <div className="flex   justify-start   ">
                 <div className="box ">
@@ -148,7 +140,10 @@ export default function Qrcodeteacher() {
                   <div className="scan-text  max-md:hidden">Scan</div>
 
                   <div className="qr-center flex items-start justify-start">
-                    <QRCode value={qrData} size={200} />
+                    <img
+                      src={`data:image/png;base64,${qrData}`}
+                      alt="QR Code"
+                    />
                   </div>
                 </div>
               </div>

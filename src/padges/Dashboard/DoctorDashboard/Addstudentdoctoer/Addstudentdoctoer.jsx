@@ -10,8 +10,7 @@ export default function Addstudentdoctoer() {
   const handleSubmit = async (data) => {
     data.id = id;
     try {
-      const res = await addStudentToCourse(data);
-      console.log(res);
+      await addStudentToCourse(data);
     } catch (error) {
       console.log(error);
     }

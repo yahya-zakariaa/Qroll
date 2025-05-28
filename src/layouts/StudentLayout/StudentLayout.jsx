@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import logos from "../../assets/zz.png";
 import avetarr from "../../assets/R.png";
@@ -8,12 +8,27 @@ import actor2 from "../../assets/Vector (6).png";
 import actor3 from "../../assets/Group 3.png";
 import cousess from "../../assets/coursessss (1).png";
 import index from "../../assets/coursessss (2).png";
+import useStudentStore from "../../store/useStudentStore";
 
 export default function StudentLayout() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
+  const [courses, setCourses] = useState([]);
   const userType = localStorage.getItem("userType");
+  const { getCourses } = useStudentStore();
+
+  const fetchCourses = async () => {
+    try {
+      const res = await getCourses();
+      setCourses(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, [courses?.length]);
 
   if (userType !== "student") {
     return <Navigate to="/home" />;
@@ -139,20 +154,22 @@ export default function StudentLayout() {
                     isOpen ? "block" : "hidden"
                   }`}
                 >
-                  <li>
-                    <Link
-                      to="/student-dashboard/coursesstudent"
-                      className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group text-white hover:bg-gray-700"
-                    >
-                      <span className="ml-0"> </span>
-                      <span className="flex-1 ms-3 text-start whitespace-nowrap">
-                        Cs{" "}
-                      </span>
-                      <span className="inline-flex items-center justify-center px-2 text-sm font-medium ">
-                        <img src={actor} alt="" />
-                      </span>
-                    </Link>
-                  </li>
+                  {courses.map((course) => (
+                    <li>
+                      <Link
+                        to={`/student-dashboard/courses/${course.id}`}
+                        className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group text-white hover:bg-gray-700"
+                      >
+                        <span className="ml-0"> </span>
+                        <span className="flex-1 ms-3 text-start whitespace-nowrap">
+                          {course.name}
+                        </span>
+                        <span className="inline-flex items-center justify-center px-2 text-sm font-medium ">
+                          <img src={actor} alt="" />
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </li>
               <li onClick={closeSidebar}>

@@ -94,5 +94,16 @@ const useTeacherStore = create((set) => ({
       throw message;
     }
   },
+  generateQr: async (id) => {
+    try {
+      const res = await axios.get(`/sections/${id}/generate-qr`);
+      console.log(res);
+      return res.data.qr;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
 }));
 export default useTeacherStore;

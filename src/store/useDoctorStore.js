@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 
 const useDoctorStore = create((set) => ({
   getProfile: async (token) => {
@@ -98,7 +99,19 @@ const useDoctorStore = create((set) => ({
       const res = await axios.post(`courses/${id}/add-student`, {
         academic_id,
       });
-      return res.data.data;
+      toast.success(res.data.message);
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  generateQr: async (id) => {
+    try {
+      const res = await axios.get(`/lectures/${id}/generate-qr`);
+      console.log(res);
+      return res.data.qr;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
       console.error("Create Lecture Error:", message);
