@@ -1,11 +1,8 @@
 import { create } from "zustand";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 
 const useAdminStore = create((set) => ({
-  user: {},
-  isLogin: false,
-  error: null,
-
   login: async ({ email, password, role_id }) => {
     try {
       const formData = new FormData();
@@ -444,14 +441,86 @@ const useAdminStore = create((set) => ({
       throw message;
     }
   },
-  getSections: async () => {
+  getSections: async (id) => {
     try {
-      const res = await axios.get("/sections");
+      const res = await axios.get(`/courses/${id}/sections`);
       console.log(res);
       return res.data.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
       console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  finalLecturesReport: async (courseId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/excessive-absence/lectures`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  finalSectionsReport: async (courseId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/excessive-absence/sections`
+      );
+      console.log(res);
+
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  getSectionAttendace: async (courseId, sectionId) => {
+    try {
+      console.log(courseId, sectionId);
+
+      const res = await axios.get(
+        `courses/${courseId}/sections/${sectionId}/attendance`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  getLectureAttendace: async (courseId, lectureId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/lectures/${lectureId}/attendance`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  importFromExcel: async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post(`/admin/import-users`, formData);
+      toast.success("Import successful!");
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("import file error:", message);
       throw message;
     }
   },

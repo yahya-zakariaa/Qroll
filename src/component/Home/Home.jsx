@@ -6,7 +6,6 @@ import img4 from "../../assets/Group 247.png";
 import img5 from "../../assets/Group 245.png";
 import img6 from "../../assets/Group 241.png";
 import img7 from "../../assets/Group 243.png";
-import img8 from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
 import admin from "../../assets/Group 1000011676.png";
 import techer from "../../assets/Group 1000011686.png";

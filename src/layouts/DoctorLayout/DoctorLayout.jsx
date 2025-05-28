@@ -14,7 +14,7 @@ export default function DoctorLayout() {
   const closeSidebar = () => setIsOpen(false);
   const [courses, setCourses] = useState([]);
   const userType = localStorage.getItem("userType");
-  const { getCourses } = useDoctorStore();
+  const { getCourses, user } = useDoctorStore();
 
   const fetchCourses = async () => {
     try {
@@ -87,7 +87,7 @@ export default function DoctorLayout() {
                   <div className="bg-black rounded-full h-11 w-11">
                     <img src={avetarr} alt="" />
                   </div>
-                  <p> mohamed ahmed</p>
+                  <p>{user.name}</p>
                 </div>
               </li>
               <li onClick={closeSidebar}>
@@ -106,7 +106,7 @@ export default function DoctorLayout() {
               </li>
               <li onClick={closeSidebar}>
                 <Link
-                  to="/doctor-dashboard/profiledoctoer"
+                  to="/doctor-dashboard/profile"
                   className="flex items-center p-2  rounded-lg text-white hover:bg-gray-700 group"
                 >
                   <span className="ml-0">

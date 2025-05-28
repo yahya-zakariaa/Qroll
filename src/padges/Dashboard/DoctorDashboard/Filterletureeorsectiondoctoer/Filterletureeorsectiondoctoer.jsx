@@ -27,8 +27,8 @@ export default function Filterletureeorsectiondoctoer() {
     }
   };
   useEffect(() => {
-    fetchLectures(id);
-    fetchSections(id);
+    fetchLectures();
+    fetchSections();
   }, []);
   return (
     <div>

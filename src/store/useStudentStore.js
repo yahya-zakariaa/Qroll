@@ -88,5 +88,6 @@ const useStudentStore = create((set) => ({
       throw message;
     }
   },
+
 }));
 export default useStudentStore;

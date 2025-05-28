@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 
 const useTeacherStore = create((set) => ({
   getProfile: async (token) => {
@@ -53,9 +54,9 @@ const useTeacherStore = create((set) => ({
       throw message;
     }
   },
-  getSections: async () => {
+  getSections: async (id) => {
     try {
-      const res = await axios.get("/sections");
+      const res = await axios.get(`courses/${id}/sections`);
       console.log(res);
       return res.data.data;
     } catch (error) {
@@ -82,11 +83,14 @@ const useTeacherStore = create((set) => ({
       throw message;
     }
   },
-  addStudentToSection: async ({ academic_id, id }) => {
+  addStudentToSections: async ({ academic_id, id }) => {
     try {
-      const res = await axios.post(`/teacher/sections/${id}/add-student`, {
+      const res = await axios.post(`courses/${id}/add-student-to-sections`, {
         academic_id,
       });
+      toast.success(res.data.message);
+      console.log(res);
+
       return res.data.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
@@ -101,6 +105,32 @@ const useTeacherStore = create((set) => ({
       return res.data.qr;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  finalSectionsReport: async (courseId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/excessive-absence/sections`
+      );
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("section report Error:", message);
+      throw message;
+    }
+  },
+  getSectionAttendace: async (courseId, sectionId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/sections/${sectionId}/attendance`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
       console.error("Create Lecture Error:", message);
       throw message;
     }

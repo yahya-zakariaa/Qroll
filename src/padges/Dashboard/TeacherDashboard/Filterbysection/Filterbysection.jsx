@@ -42,9 +42,7 @@ export default function Filterbysection() {
           {sections?.map((s) => (
             <button
               onClick={() =>
-                navigate(
-                  "/teacher-dashboard/coursestecher/filterbysection/sectionattentencereport"
-                )
+                navigate(`/teacher-dashboard/courses/${id}/sections/${s.id}`)
               }
               className="w-[20%] h-14 border-[1px] border-[#161B39] text-[#161B39] rounded-[7px]"
             >

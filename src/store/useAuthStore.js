@@ -2,9 +2,6 @@ import { create } from "zustand";
 import axios from "../api/axios";
 
 const useAuthStore = create((set) => ({
-  user: {},
-  isLogin: false,
-  error: null,
   login: async ({ email, password, role_id }) => {
     try {
       const formData = new FormData();
@@ -46,6 +43,16 @@ const useAuthStore = create((set) => ({
         error: err.response?.data?.message || err.message,
         isLogin: false,
       });
+    }
+  },
+  myStats: async () => {
+    try {
+      const res = await axios.get("/my-stats");
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Get Course Error:", message);
+      throw message;
     }
   },
 }));

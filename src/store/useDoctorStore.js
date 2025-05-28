@@ -83,9 +83,9 @@ const useDoctorStore = create((set) => ({
       throw message;
     }
   },
-  getSections: async () => {
+  getSections: async (id) => {
     try {
-      const res = await axios.get("/sections");
+      const res = await axios.get(`/courses/${id}/sections`);
       console.log(res);
       return res.data.data;
     } catch (error) {
@@ -96,6 +96,8 @@ const useDoctorStore = create((set) => ({
   },
   getSectionAttendace: async (courseId, sectionId) => {
     try {
+      console.log(courseId, sectionId);
+
       const res = await axios.get(
         `courses/${courseId}/sections/${sectionId}/attendance`
       );
@@ -131,6 +133,33 @@ const useDoctorStore = create((set) => ({
     } catch (error) {
       const message = error.response?.data?.message || error.message;
       toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  finalLecturesReport: async (courseId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/excessive-absence/lectures`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  finalSectionsReport: async (courseId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/excessive-absence/sections`
+      );
+      console.log(res);
+
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
       console.error("Create Lecture Error:", message);
       throw message;
     }

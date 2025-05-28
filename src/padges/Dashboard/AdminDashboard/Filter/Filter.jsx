@@ -20,7 +20,7 @@ export default function Filter() {
   };
   const fetchSections = async () => {
     try {
-      const res = await getSections();
+      const res = await getSections(id);
       setSections(res);
       console.log(res);
     } catch (error) {
@@ -55,7 +55,7 @@ export default function Filter() {
                 <button
                   onClick={() =>
                     navigate(
-                      "/doctor-dashboard/coursessdoctoer/sectionfilterdocter"
+                      `/admin-dashboard/courses/${id}/filter/sections/${s.id}`
                     )
                   }
                   className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"
@@ -77,7 +77,7 @@ export default function Filter() {
                 <button
                   onClick={() =>
                     navigate(
-                      "/doctor-dashboard/coursessdoctoer/lecturesfilterdoctoer"
+                      `/admin-dashboard/courses/${id}/filter/lectures/${l.id}`
                     )
                   }
                   className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"

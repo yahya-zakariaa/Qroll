@@ -82,7 +82,7 @@ export default function Coursestecher() {
             </li>
             <li>
               <Link
-                to="/teacher-dashboard/coursestecher/Sectionfinalreport"
+                to={`/teacher-dashboard/courses/${id}/sections/report`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100"
               >
                 <span className="ml-0">

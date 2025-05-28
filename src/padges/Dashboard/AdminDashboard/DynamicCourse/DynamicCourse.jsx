@@ -77,7 +77,7 @@ export default function DynamicCourse() {
             </li>
             <li>
               <Link
-                to="/admin-dashboard/courses/absentstudentadmin"
+                to={`/admin-dashboard/courses/${id}/excessive-absence`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">
@@ -118,7 +118,7 @@ export default function DynamicCourse() {
 
             <li>
               <Link
-                to="/admin-dashboard/courses/sectionreportadmin"
+                to={`/admin-dashboard/courses/${id}/sections/report`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100"
               >
                 <span className="ml-0">
@@ -138,7 +138,7 @@ export default function DynamicCourse() {
             </li>
             <li>
               <Link
-                to="/admin-dashboard/courses/leturereportadmin"
+                to={`/admin-dashboard/courses/${id}/lectures/report`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100"
               >
                 <span className="ml-0">

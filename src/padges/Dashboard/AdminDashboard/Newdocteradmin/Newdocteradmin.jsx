@@ -1,47 +1,25 @@
 import "simple-datatables/dist/style.css";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
 import useAdminStore from "../../../../store/useAdminStore";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 
 export default function Newdocteradmin() {
-  const { addDoctor } = useAdminStore();
-  const exportToExcel = () => {
-    const exportData = [
-      {
-        Name: nameRef.current.value,
-        Email: emailRef.current.value,
-        PhoneNumber: phoneRef.current.value,
-        NationalID: nationalIDRef.current.value,
-      },
-    ];
+  const { addDoctor, importFromExcel } = useAdminStore();
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "FormData");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "form-data.xlsx");
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      importFromExcel(file);
+    }
   };
 
   const handleSubmit = async (data) => {
-    console.log(data);
-
     try {
       await toast.promise(addDoctor(data), {
         loading: "Adding Doctor...",
         success: "Doctor Created Successfully",
-        error: (err) => err || "something want worng !",
+        error: (err) => err || "Something went wrong!",
       });
       formik.resetForm();
     } catch (error) {
@@ -63,6 +41,7 @@ export default function Newdocteradmin() {
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -75,29 +54,38 @@ export default function Newdocteradmin() {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
   return (
     <div>
-      <div className="lg:flex items-center  lg:justify-between ">
-        <div className="flex  gap-2 m-3 lg:m-3 justify-self-center">
-          <h1 className="text-[#71717A] ">doctors </h1>
+      <div className="lg:flex items-center lg:justify-between">
+        <div className="flex gap-2 m-3 lg:m-3 justify-self-center">
+          <h1 className="text-[#71717A]">doctors</h1>
           <i
             className="fa-solid fa-chevron-right mt-1"
             style={{ color: "#71717a" }}
           />
-          <h1 className="text-[#71717A] "> view all </h1>
+          <h1 className="text-[#71717A]">view all</h1>
           <i
             className="fa-solid fa-chevron-right mt-1"
             style={{ color: "#71717a" }}
           />
-          <h1 className="text-[#71717A] "> add new doctor </h1>
+          <h1 className="text-[#71717A]">add new doctor</h1>
         </div>
-        <div className="flex ">
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 max-md:text-[13px]  rounded-[8px] h-11"
+
+        <div className="flex">
+          <label
+            htmlFor="excelUpload"
+            className="border cursor-pointer border-[#161B39] text-[#161B39] m-2 w-48 max-md:text-[13px] rounded-[8px] h-11 flex items-center justify-center"
           >
-            import from excel sheet
-          </button>
+            Import from excel sheet
+          </label>
+          <input
+            id="excelUpload"
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+          />
         </div>
       </div>
 

@@ -61,7 +61,7 @@ export default function coursessdoctoer() {
             </li>
             <li>
               <Link
-                to="/doctor-dashboard/coursessdoctoer/veiwabsentdoctoer"
+                to={`/admin-dashboard/courses/${id}/excessive-absence`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">
@@ -102,7 +102,7 @@ export default function coursessdoctoer() {
 
             <li>
               <Link
-                to="/doctor-dashboard/coursessdoctoer/finalsectiondoctoer"
+                to={`/doctor-dashboard/courses/${id}/sections/report`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100"
               >
                 <span className="ml-0">
@@ -122,7 +122,7 @@ export default function coursessdoctoer() {
             </li>
             <li>
               <Link
-                to="/doctor-dashboard/coursessdoctoer/finalleturesdoctoer"
+                to={`/doctor-dashboard/courses/${id}/lectures/report`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100"
               >
                 <span className="ml-0">

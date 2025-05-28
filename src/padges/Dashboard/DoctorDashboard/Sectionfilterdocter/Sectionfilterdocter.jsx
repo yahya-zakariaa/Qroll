@@ -6,150 +6,9 @@ import left from "../../../../assets/Chevron left.png";
 import right from "../../../../assets/Chevron right.png";
 import addd from "../../../../assets/danger-svgrepo-com (1).png";
 import useDoctorStore from "../../../../store/useDoctorStore";
-const items = [
-  {
-    id: 1,
-    name: "John Doe",
-    studentId: "12345",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    studentId: "12346",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 3,
-    name: "Michael Johnson",
-    studentId: "12347",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    studentId: "12348",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 5,
-    name: "David Wilson",
-    studentId: "12349",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 6,
-    name: "Sophia Lee",
-    studentId: "12350",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 7,
-    name: "James Brown",
-    studentId: "12351",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 8,
-    name: "Olivia White",
-    studentId: "12352",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 9,
-    name: "William Harris",
-    studentId: "12353",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 10,
-    name: "Isabella Clark",
-    studentId: "12354",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 11,
-    name: "John Doe",
-    studentId: "12345",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 12,
-    name: "Jane Smith",
-    studentId: "12346",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 13,
-    name: "Michael Johnson",
-    studentId: "12347",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 14,
-    name: "Emily Davis",
-    studentId: "12348",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 15,
-    name: "David Wilson",
-    studentId: "12349",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 16,
-    name: "Sophia Lee",
-    studentId: "12350",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 17,
-    name: "James Brown",
-    studentId: "12351",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 18,
-    name: "Olivia White",
-    studentId: "12352",
-    date: "2025-04-09",
-    status: "Present",
-  },
-  {
-    id: 19,
-    name: "William Harris",
-    studentId: "12353",
-    date: "2025-04-09",
-    status: "Absent",
-  },
-  {
-    id: 20,
-    name: "Isabella Clark",
-    studentId: "12354",
-    date: "2025-04-09",
-    status: "Present",
-  },
-];
+
 export default function Sectionfilterdocter() {
-  const { cid, lid } = useParams();
+  const { cid, sid } = useParams();
   const { getSectionAttendace } = useDoctorStore();
   const navigate = useNavigate();
 
@@ -168,7 +27,7 @@ export default function Sectionfilterdocter() {
   useEffect(() => {
     const fetchSectionAttendance = async () => {
       try {
-        const res = await getSectionAttendace(cid, lid);
+        const res = await getSectionAttendace(cid, sid);
         setStudents(res);
         setFilteredItems(res);
       } catch (error) {

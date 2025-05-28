@@ -167,35 +167,28 @@ export default function Approutes() {
               element={<CourseStudent />}
             />
             <Route
-              path="/admin-dashboard/courses/absentstudentadmin"
+              path="/admin-dashboard/courses/:id/excessive-absence"
               element={<Absentstudentadmin />}
             />
-            <Route
-              path="/admin-dashboard/courses/absentstudentadmin/letureattentdoctoeradmin"
-              element={<Letureattentdoctoeradmin />}
-            />
-            <Route
-              path="/admin-dashboard/courses/absentstudentadmin/sectionattenddocteradmin"
-              element={<Sectionattenddocteradmin />}
-            />
+
             <Route
               path="/admin-dashboard/courses/:id/filter"
               element={<Filter />}
             />
             <Route
-              path="/admin-dashboard/courses/filter/filltersectionadmin"
+              path="/admin-dashboard/courses/:cid/filter/sections/:sid"
               element={<Filltersectionadmin />}
             />
             <Route
-              path="/admin-dashboard/courses/filter/fillterletureadmin"
+              path="/admin-dashboard/courses/:cid/filter/lectures/:lid"
               element={<Fillterletureadmin />}
             />
             <Route
-              path="/admin-dashboard/courses/sectionreportadmin"
+              path="/admin-dashboard/courses/:id/sections/report"
               element={<Sectionreportadmin />}
             />
             <Route
-              path="/admin-dashboard/courses/leturereportadmin"
+              path="/admin-dashboard/courses/:id/lectures/report"
               element={<Leturereportadmin />}
             />
             <Route
@@ -207,7 +200,7 @@ export default function Approutes() {
           <Route path="/doctor-dashboard" element={<DoctorLayout />}>
             <Route index element={<DoctorDashboard />} />
             <Route
-              path="/doctor-dashboard/profiledoctoer"
+              path="/doctor-dashboard/profile"
               element={<Profiledoctoer />}
             />
             <Route
@@ -231,7 +224,7 @@ export default function Approutes() {
               element={<Addstudentdoctoer />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/veiwabsentdoctoer"
+              path="/doctor-dashboard/courses/:id/excessive-absence"
               element={<Veiwabsentdoctoer />}
             />
             <Route
@@ -247,11 +240,11 @@ export default function Approutes() {
               element={<Lecturesfilterdoctoer />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/finalsectiondoctoer"
+              path="/doctor-dashboard/courses/:id/sections/report"
               element={<Finalsectiondoctoer />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/finalleturesdoctoer"
+              path="/doctor-dashboard/courses/:id/lectures/report"
               element={<Finalleturesdoctoer />}
             />
           </Route>
@@ -328,15 +321,11 @@ export default function Approutes() {
               element={<Filterbysection />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/filterbysection/sectionattentencereport"
+              path="/teacher-dashboard/courses/:id/sections/:sid"
               element={<Sectionattentencereport />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/Sectionfinalreport"
-              element={<Sectionfinalreport />}
-            />
-            <Route
-              path="/teacher-dashboard/coursestecher/Sectionfinalreport"
+              path="/teacher-dashboard/courses/:id/sections/report"
               element={<Sectionfinalreport />}
             />
             <Route

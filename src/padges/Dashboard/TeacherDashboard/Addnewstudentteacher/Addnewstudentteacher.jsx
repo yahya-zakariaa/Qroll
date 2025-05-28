@@ -9,12 +9,11 @@ import useTeacherStore from "../../../../store/useTeacherStore";
 export default function Addnewstudentteacher() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { addStudentToSection } = useTeacherStore();
+  const { addStudentToSections } = useTeacherStore();
   const handleSubmit = async (data) => {
     data.id = id;
     try {
-      const res = await addStudentToSection(data);
-      console.log(res);
+      const res = await addStudentToSections(data);
     } catch (error) {
       console.log(error);
     }
