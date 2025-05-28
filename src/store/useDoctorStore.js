@@ -94,6 +94,34 @@ const useDoctorStore = create((set) => ({
       throw message;
     }
   },
+  getSectionAttendace: async (courseId, sectionId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/sections/${sectionId}/attendance`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
+  getLectureAttendace: async (courseId, lectureId) => {
+    try {
+      const res = await axios.get(
+        `courses/${courseId}/lectures/${lectureId}/attendance`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("Create Lecture Error:", message);
+      throw message;
+    }
+  },
   addStudentToCourse: async ({ academic_id, id }) => {
     try {
       const res = await axios.post(`courses/${id}/add-student`, {

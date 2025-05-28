@@ -6,7 +6,7 @@ import useStudentStore from "../../../../store/useStudentStore";
 export default function Scanqrcodestudent() {
   const navigate = useNavigate();
   const [cameraAvailable, setCameraAvailable] = useState(true);
-  const { scanLectureQr } = useStudentStore();
+  const { scanQr } = useStudentStore(); // تأكد من الاسم الصحيح
   const scannerRef = useRef(null);
 
   useEffect(() => {
@@ -25,15 +25,20 @@ export default function Scanqrcodestudent() {
 
   useEffect(() => {
     if (cameraAvailable) {
-      const scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+      const scanner = new Html5QrcodeScanner("reader", {
+        fps: 10,
+        qrbox: 250,
+      });
+
       scanner.render(
         async (decodedText) => {
           handleScan(decodedText);
         },
         (error) => {
-          // optionally: console.warn("Scanning error", error);
+          // ممكن تضيف logging لو حبيت
         }
       );
+
       scannerRef.current = scanner;
 
       return () => {
@@ -43,15 +48,24 @@ export default function Scanqrcodestudent() {
   }, [cameraAvailable]);
 
   const handleScan = async (decodedText) => {
+    let data;
     try {
-      const data = JSON.parse(decodedText);
+      data = JSON.parse(decodedText);
+    } catch {
+      data = { qr: decodedText };
+    }
 
-      await scanLectureQr(data);
+    console.log("Scanned Data:", data);
+
+    try {
+      await scanQr(data);
+      alert("✅ تم تسجيل الحضور بنجاح");
       navigate(
         "/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee"
       );
     } catch (err) {
-      console.log(err);
+      console.error("QR Scan Error:", err);
+      alert("❌ فشل تسجيل الحضور، حاول مرة أخرى");
     }
   };
 
@@ -64,7 +78,7 @@ export default function Scanqrcodestudent() {
       const result = await html5QrCode.scanFile(file, true);
       handleScan(result);
     } catch (err) {
-      alert("فشل قراءة QR من الصورة 👀");
+      alert("❌ فشل قراءة QR من الصورة 👀");
       console.error(err);
     } finally {
       html5QrCode.clear().catch(() => {});

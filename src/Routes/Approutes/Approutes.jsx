@@ -239,11 +239,11 @@ export default function Approutes() {
               element={<Filterletureeorsectiondoctoer />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/sectionfilterdocter"
+              path="/doctor-dashboard/courses/:cid/filter/sections/:sid"
               element={<Sectionfilterdocter />}
             />
             <Route
-              path="/doctor-dashboard/coursessdoctoer/lecturesfilterdoctoer"
+              path="/doctor-dashboard/courses/:cid/filter/lectures/:lid"
               element={<Lecturesfilterdoctoer />}
             />
             <Route
@@ -279,11 +279,11 @@ export default function Approutes() {
               element={<Scanerdonee />}
             />
             <Route
-              path="/student-dashboard/coursesstudent/sectionattendstudent"
+              path="/student-dashboard/courses/:id/sections"
               element={<Sectionattendstudent />}
             />
             <Route
-              path="/student-dashboard/coursesstudent/lectureattendstudent"
+              path="/student-dashboard/courses/:id/lectures"
               element={<Lectureattendstudent />}
             />
             <Route
