@@ -100,7 +100,7 @@ export default function Approutes() {
               element={<Inboxadmin />}
             />
             <Route
-              path="/admin-dashboard/inboxadmin/actionmassageadmin"
+              path="/admin-dashboard/message/:id"
               element={<Actionmassageadmin />}
             />
             <Route

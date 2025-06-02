@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import left from "../../../../assets/Chevron left.png";
 import right from "../../../../assets/Chevron right.png";
 import useAdminStore from "../../../../store/useAdminStore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Letureattentdoctoeradmin() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { finalLecturesReport } = useAdminStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredstudents, setFilteredstudents] = useState();
@@ -155,6 +156,10 @@ export default function Letureattentdoctoeradmin() {
                   {" "}
                   absence percentage{" "}
                 </th>
+                <th className="px-4 py-2 text-center text-sm font-medium text-[#A1A1AA]">
+                  {" "}
+                  action{" "}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -178,6 +183,14 @@ export default function Letureattentdoctoeradmin() {
 
                   <td className="px-4 py-2 text-sm text-gray-600">
                     {student.absence_percentage}{" "}
+                  </td>
+                  <td className="px-3 py-2 text-center">
+                    <button
+                      onClick={() => navigate(`/admin-dashboard/message/${student?.id}`)}
+                      className="px-4 rounded-lg font-medium py-2 text-sm text-white bg-[#161c39]"
+                    >
+                      message
+                    </button>
                   </td>
                 </tr>
               ))}

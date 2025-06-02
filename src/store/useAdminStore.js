@@ -524,6 +524,18 @@ const useAdminStore = create((set) => ({
       throw message;
     }
   },
+  sendMessage: async (data) => {
+    try {
+      const res = await axios.post("/inbox", data);
+      console.log(res);
+      toast.success("message send successfully");
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
+      console.error("send message error:", message);
+      throw message;
+    }
+  },
 }));
 
 export default useAdminStore;

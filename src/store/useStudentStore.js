@@ -88,6 +88,17 @@ const useStudentStore = create((set) => ({
       throw message;
     }
   },
+  getInbox: async () => {
+    try {
+      const res = await axios.get("/student/inbox");
+      console.log(res);
 
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("scan qr Error:", message);
+      throw message;
+    }
+  },
 }));
 export default useStudentStore;
