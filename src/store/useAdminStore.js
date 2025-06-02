@@ -536,6 +536,29 @@ const useAdminStore = create((set) => ({
       throw message;
     }
   },
+  getInbox: async () => {
+    try {
+      const res = await axios.get("/student/inbox");
+      console.log(res);
+
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("scan qr Error:", message);
+      throw message;
+    }
+  },
+  takeAcion: async (data) => {
+    try {
+      const res = await axios.post("/take-action", data);
+      console.log(res);
+      return res.data.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error("take action Error:", message);
+      throw message;
+    }
+  },
 }));
 
 export default useAdminStore;
