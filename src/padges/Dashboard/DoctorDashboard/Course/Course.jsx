@@ -61,7 +61,7 @@ export default function coursessdoctoer() {
             </li>
             <li>
               <Link
-                to={`/admin-dashboard/courses/${id}/excessive-absence`}
+                to={`/doctor-dashboard/courses/${id}/excessive-absence`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">

@@ -87,7 +87,7 @@ export default function DoctorLayout() {
                   <div className="bg-black rounded-full h-11 w-11">
                     <img src={avetarr} alt="" />
                   </div>
-                  <p>{user.name}</p>
+                  <p>{user?.name}</p>
                 </div>
               </li>
               <li onClick={closeSidebar}>

@@ -45,7 +45,7 @@ export default function Qrcodeleturedoctoer() {
   };
   useEffect(() => {
     fetchLectures();
-  }, []);
+  }, [courseId]);
   return (
     <div className="w-full">
       <div className="flex gap-3 md:m-10 max-md:m-3 items-center">

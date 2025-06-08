@@ -3,26 +3,31 @@ import { Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
 import useStudentStore from "../../../../store/useStudentStore";
 
-export default function Scanqrcodestudent() {
+export default function ScanQrCodeStudent() {
   const navigate = useNavigate();
-  const [cameraAvailable, setCameraAvailable] = useState(true);
-  const { scanQr } = useStudentStore(); // تأكد من الاسم الصحيح
-  const scannerRef = useRef(null);
+  const { scanQr } = useStudentStore();
 
+  const scannerRef = useRef(null);
+  const hasScannedRef = useRef(false);
+
+  const [cameraAvailable, setCameraAvailable] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // التحقق من وجود كاميرا
   useEffect(() => {
     const checkCamera = async () => {
-      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+      if (navigator.mediaDevices?.enumerateDevices) {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        const hasCamera = devices.some(
-          (device) => device.kind === "videoinput"
-        );
+        const hasCamera = devices.some((d) => d.kind === "videoinput");
         setCameraAvailable(hasCamera);
+      } else {
+        setCameraAvailable(false);
       }
     };
-
     checkCamera();
   }, []);
 
+  // تشغيل ماسح الكاميرا
   useEffect(() => {
     if (cameraAvailable) {
       const scanner = new Html5QrcodeScanner("reader", {
@@ -32,10 +37,14 @@ export default function Scanqrcodestudent() {
 
       scanner.render(
         async (decodedText) => {
-          handleScan(decodedText);
+          if (!hasScannedRef.current) {
+            hasScannedRef.current = true;
+            await handleScan(decodedText);
+          }
         },
         (error) => {
-          // ممكن تضيف logging لو حبيت
+          console.log(error);
+          
         }
       );
 
@@ -56,16 +65,18 @@ export default function Scanqrcodestudent() {
     }
 
     console.log("Scanned Data:", data);
+    setIsLoading(true);
 
     try {
+      console.log(data);
       await scanQr(data);
       alert("✅ تم تسجيل الحضور بنجاح");
-      navigate(
-        "/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee"
-      );
+      navigate("/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee");
     } catch (err) {
       console.error("QR Scan Error:", err);
       alert("❌ فشل تسجيل الحضور، حاول مرة أخرى");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,10 +84,19 @@ export default function Scanqrcodestudent() {
     const file = e.target.files[0];
     if (!file) return;
 
+    if (!file.type.startsWith("image/")) {
+      alert("⚠️ الرجاء رفع صورة فقط");
+      return;
+    }
+
+    if (scannerRef.current?.clear) {
+      await scannerRef.current.clear().catch(() => {});
+    }
+
     const html5QrCode = new Html5Qrcode("reader");
     try {
       const result = await html5QrCode.scanFile(file, true);
-      handleScan(result);
+      await handleScan(result);
     } catch (err) {
       alert("❌ فشل قراءة QR من الصورة 👀");
       console.error(err);
@@ -99,7 +119,7 @@ export default function Scanqrcodestudent() {
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
         <h1 className="text-[#71717A]">CS</h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A]">scan QR code</h1>
+        <h1 className="text-[#71717A]">Scan QR Code</h1>
       </div>
 
       <div className="flex flex-col items-center p-4">
@@ -107,10 +127,15 @@ export default function Scanqrcodestudent() {
           Make sure you allow your camera
         </h1>
 
+        {isLoading && <p className="text-blue-500 mb-2">⏳ جاري التحقق...</p>}
+
         {cameraAvailable ? (
           <div id="reader" className="w-full max-w-md"></div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-4">
+            <p className="text-red-500">
+              📵 لا يوجد كاميرا متاحة. يمكنك رفع صورة QR بدلاً من ذلك.
+            </p>
             <input
               type="file"
               accept="image/*"
