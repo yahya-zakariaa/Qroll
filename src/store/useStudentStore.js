@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "../api/axios";
-import toast from "react-hot-toast";
 
 const useStudentStore = create((set) => ({
   getProfile: async (token) => {
@@ -46,21 +45,25 @@ const useStudentStore = create((set) => ({
   scanLectureQr: async (data) => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
     try {
-      const res = await axios.post(
-        "https://your-backend.com/student/attendance/scan",
-        formData
-      );
-      toast.success("add successfully");
+      console.log(formData);
+      const res = await axios.post("/student/attendance/scan", formData);
       console.log(res);
+      return res.data.message;
     } catch (error) {
-      console.log(error);
-
       const message = error.response?.data?.message || error.message;
       console.error("scan qr Error:", message);
       throw message;
     }
+  },
+  syncOfflineScans: async () => {
+    const offlineScans = JSON.parse(
+      localStorage.getItem("offlineScans") || "[]"
+    );
+    for (const scan of offlineScans) {
+      await axios.post("/student/attendance/scan", scan);
+    }
+    localStorage.removeItem("offlineScans");
   },
   getLecturesAttendace: async (courseId) => {
     try {

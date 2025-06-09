@@ -16,6 +16,7 @@ export default function Qrcodeleturedoctoer() {
   const [lectures, setLectures] = useState([]);
   const getQrCode = async (id) => {
     try {
+      console.log(id);
       const res = await generateQr(id);
       setQrData(res);
       setQrVisible(true);
@@ -107,14 +108,14 @@ export default function Qrcodeleturedoctoer() {
                     add new Lecture{" "}
                   </span>
                 </li>
-                {lectures?.map((s) => (
+                {lectures?.map((l) => (
                   <li
-                    onClick={() => getQrCode(s.id)}
+                    onClick={() => getQrCode(l?.id)}
                     className="flex items-center md:w-[51%] max-md:w-[95%] p-2 cursor-pointer border-[1px] border-[#A1A1A1] text-gray-900 transition duration-75 rounded-lg   "
                   >
                     <span className="inline-flex items-center justify-center px-2 text-sm font-medium "></span>
                     <span className="flex-1 ms-3  text-[#161B39] text-start whitespace-nowrap">
-                      {s.name}
+                      {l?.name}
                     </span>
                   </li>
                 ))}
@@ -124,28 +125,36 @@ export default function Qrcodeleturedoctoer() {
         </div>
         <div className=" md:w-[45%] w-full   text-center flex items-center justify-start  ">
           {qrVisible && (
-            <div className=" w-fit flex flex-col justify-center items-center me-20  ">
-              <h3 className="text-xl text-center md:mb-5 mb-0 ">
+            <div className="w-fit flex flex-col justify-center items-center me-20">
+              <h3 className="text-xl text-center md:mb-5 mb-0">
                 Lecture QR code
               </h3>
 
-              <div className="flex   justify-start   ">
-                <div className="box ">
-                  <span className="corner  max-md:hidden top-left"></span>
-                  <span className="corner  max-md:hidden top-right"></span>
-                  <span className="corner  max-md:hidden  bottom-left"></span>
-                  <span className="corner  max-md:hidden  bottom-right"></span>
+              <div className="flex justify-start">
+                <div className="box">
+                  <span className="corner max-md:hidden top-left"></span>
+                  <span className="corner max-md:hidden top-right"></span>
+                  <span className="corner max-md:hidden bottom-left"></span>
+                  <span className="corner max-md:hidden bottom-right"></span>
 
-                  <div className="scan-text  max-md:hidden">Scan</div>
+                  <div className="scan-text max-md:hidden">Scan</div>
 
-                  <div className="qr-center flex items-start justify-start">
+                  <div className="qr-center flex justify-start flex-col items-center">
                     <img
                       src={`data:image/png;base64,${qrData}`}
                       alt="QR Code"
+                      id="qrImage"
                     />
                   </div>
                 </div>
               </div>
+                    <a
+                      href={`data:image/png;base64,${qrData}`}
+                      download="lecture-qr.png"
+                      className="mt-4 inline-block bg-[#161B39]  text-white px-4 py-2 rounded-md"
+                    >
+                      Download
+                    </a>
             </div>
           )}
         </div>
