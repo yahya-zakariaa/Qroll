@@ -114,25 +114,9 @@ export default function Sectionfinalreport() {
             <img className="h-5" src={addd} alt="" />
             <p className="p-2">view excessive absence </p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
         </div>
       </div>
       <div className="w-full ">
-        <div className="flex items-center justify-between">
-          <h2>number of lecture : 4</h2>
-          <button className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-32  rounded-[8px] h-11">
-            <p className="p-2">sort by </p>
-            <i
-              className="fa-solid fa-caret-down"
-              style={{ color: "#ffffff" }}
-            />
-          </button>
-        </div>
         <div className="  w-[90%] ">
           <label
             htmlFor="default-search"

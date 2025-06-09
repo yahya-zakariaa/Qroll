@@ -1,5 +1,4 @@
 import React from "react";
-import icon1 from "../../../../assets/Chevron right.png";
 import qrcode from "../../../../assets/qr-code-svgrepo-com.png";
 import vectorright from "../../../../assets/Vector (8).png";
 import studentvector from "../../../../assets/students-on-lecture-svgrepo-com (1).png";
@@ -103,7 +102,7 @@ export default function Coursestecher() {
 
             <li>
               <Link
-                to="/teacher-dashboard/coursestecher/excessiveabsencestudents"
+                to={`/teacher-dashboard/courses/${id}/excessive-absence`}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">

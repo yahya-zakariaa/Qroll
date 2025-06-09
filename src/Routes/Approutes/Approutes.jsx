@@ -329,7 +329,7 @@ export default function Approutes() {
               element={<Sectionfinalreport />}
             />
             <Route
-              path="/teacher-dashboard/coursestecher/excessiveabsencestudents"
+              path="/teacher-dashboard/courses/:id/excessive-absence"
               element={<Excessiveabsencestudent />}
             />
           </Route>
