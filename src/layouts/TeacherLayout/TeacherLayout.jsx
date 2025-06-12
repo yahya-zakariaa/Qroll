@@ -87,7 +87,12 @@ export default function TeacherLayout() {
                   <div className="bg-black rounded-full h-11 w-11">
                     <img src={avetarr} alt="" />
                   </div>
-                  <p> mohamed ahmed</p>
+                  <p>
+                    {" "}
+                    {(localStorage.getItem("userName") &&
+                      localStorage.getItem("userName")) ||
+                      "Admin"}
+                  </p>
                 </div>
               </li>
               <li onClick={closeSidebar}>

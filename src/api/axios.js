@@ -21,10 +21,6 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 500) {
       toast.error("Internal Server Error");
-    } else if (error.response?.data?.message) {
-      toast.error(error.response.data.message);
-    } else {
-      toast.error("Something went wrong");
     }
 
     return Promise.reject(error);

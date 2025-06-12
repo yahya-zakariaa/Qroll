@@ -90,7 +90,11 @@ export default function StudentLayout() {
                     <div className="bg-black rounded-full h-11 w-11">
                       <img src={avetarr} alt="" />
                     </div>
-                    <p> Dr mohamed ahmed</p>
+                    <p>
+                      {(localStorage.getItem("userName") &&
+                        localStorage.getItem("userName")) ||
+                        "Admin"}
+                    </p>
                   </div>
                 </Link>
               </li>

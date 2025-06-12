@@ -93,7 +93,7 @@ export default function AdminLayout() {
                   <p>
                     {" "}
                     {(localStorage.getItem("userName") &&
-                      JSON.stringify(localStorage.getItem("userName"))) ||
+                      localStorage.getItem("userName")) ||
                       "Admin"}
                   </p>
                 </div>

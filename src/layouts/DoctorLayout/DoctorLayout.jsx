@@ -87,7 +87,12 @@ export default function DoctorLayout() {
                   <div className="bg-black rounded-full h-11 w-11">
                     <img src={avetarr} alt="" />
                   </div>
-                  <p>{user?.name}</p>
+                  <p>
+                    {" "}
+                    {(localStorage.getItem("userName") &&
+                      localStorage.getItem("userName")) ||
+                      "Admin"}
+                  </p>
                 </div>
               </li>
               <li onClick={closeSidebar}>
