@@ -51,7 +51,7 @@ export default function Qrcodeteacher() {
     <div className="w-full">
       <div className="flex gap-3 md:m-10 max-md:m-3 items-center">
         <button
-          onClick={() => navigate("/doctor-dashboard/coursessdoctoer")}
+          onClick={() => navigate(-1)}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />

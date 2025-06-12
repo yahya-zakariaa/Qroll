@@ -5,13 +5,21 @@ import studentvector from "../../../../assets/students-on-lecture-svgrepo-com (1
 import filliter from "../../../../assets/filter-svgrepo-com 1.png";
 import sectionte from "../../../../assets/section-svgrepo-com.png";
 import denger from "../../../../assets/danger-svgrepo-com.png";
-import { Link, Navigate, Outlet, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function Coursestecher() {
   const { id } = useParams();
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="flex gap-2 items-center m-6 max-sm:m-5">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex gap-2 items-center  text-[#161B39]"
+        >
+          <i className="fa-solid fa-arrow-left-long" />
+          <h1>BACK</h1>{" "}
+        </button>
         <h1 className="text-[#71717A] ">COURCES </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
         <h1 className="text-[#71717A] "> CS </h1>

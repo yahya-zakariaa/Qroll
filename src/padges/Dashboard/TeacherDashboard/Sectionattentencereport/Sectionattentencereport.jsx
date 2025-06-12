@@ -57,31 +57,6 @@ export default function Sectionattentencereport() {
     }
   };
 
-  const exportToExcel = () => {
-    const exportData = filteredItems.map(
-      ({ id, name, studentId, date, status }) => ({
-        ID: id,
-        Name: name,
-        StudentID: studentId,
-        Date: date,
-        Status: status,
-      })
-    );
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "students.xlsx");
-  };
   return (
     <div>
       <div className="lg:flex lg:justify-between items-center">

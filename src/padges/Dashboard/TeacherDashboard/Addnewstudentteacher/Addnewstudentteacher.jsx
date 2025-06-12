@@ -29,13 +29,11 @@ export default function Addnewstudentteacher() {
       <div className="lg:flex items-center  lg:justify-between ">
         <div className="flex gap-2 m-6  max-sm:m-5">
           <button
-            onClick={() =>
-              navigate("/doctor-dashboard/coursessdoctoer/allstudentdoctoer")
-            }
+            onClick={() => navigate(-1)}
             className="flex gap-2 items-center  text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />
-            <h1>BACK</h1>
+            <h1>BACK</h1>{" "}
           </button>
           <h1 className="text-[#71717A] ">COURCES </h1>
           <i
