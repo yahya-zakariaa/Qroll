@@ -73,7 +73,7 @@ export default function Sectionattendstudent() {
                       <td className="p-2 text-center ">
                         <span
                           className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                            item.status === "Present"
+                            item.status === "present"
                               ? "bg-green-100 text-green-700"
                               : "bg-pink-100 text-red-600"
                           }`}
