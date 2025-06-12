@@ -88,11 +88,11 @@ export default function Approutes() {
           <Route path="/admin-dashboard" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route
-              path="/admin-dashboard/profiledoctoer"
+              path="/admin-dashboard/profile"
               element={<Profileadmin />}
             />
             <Route
-              path="/admin-dashboard/profiledoctoer/changepassowredadmin"
+              path="/admin-dashboard/profile/change-password"
               element={<Changepassowredadmin />}
             />
             <Route

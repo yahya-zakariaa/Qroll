@@ -111,43 +111,16 @@ export default function Finalleturesdoctoer() {
             <p
               className="p-2"
               onClick={() =>
-                navigate(
-                  "/teacher-dashboard/coursestecher/addnewstudentteacher"
-                )
+                navigate(`/doctor-dashboard/courses/${id}/excessive-absence`)
               }
             >
               view excessive absence{" "}
             </p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
         </div>
       </div>
-      <div className="w-full ">
-        <div className="flex items-center justify-between">
-          <h2>number of lecture : 4</h2>
-          <button className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-32  rounded-[8px] h-11">
-            <p
-              className="p-2"
-              onClick={() =>
-                navigate(
-                  "/teacher-dashboard/coursestecher/addnewstudentteacher"
-                )
-              }
-            >
-              sort by{" "}
-            </p>
-            <i
-              className="fa-solid fa-caret-down"
-              style={{ color: "#ffffff" }}
-            />
-          </button>
-        </div>
-        <div className="  w-[90%] ">
+      <div className="w-full mt-20 ">
+        <div className="  w-[90%] mx-auto">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -190,7 +163,7 @@ export default function Finalleturesdoctoer() {
           </div>
         </div>
 
-        <div className="p-6 w-[90%]">
+        <div className="p-6 w-full">
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full ">
               <thead className="">

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import left from "../../../../assets/Chevron left.png";
 import right from "../../../../assets/Chevron right.png";
@@ -6,6 +6,7 @@ import useTeacherStore from "../../../../store/useTeacherStore";
 
 export default function Excessiveabsencestudent() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { finalSectionsReport } = useTeacherStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredstudents, setFilteredstudents] = useState();
@@ -49,8 +50,33 @@ export default function Excessiveabsencestudent() {
     fetchStudents();
   }, []);
   return (
-    <div>
-      <div className="  w-[90%] max-md:w-[100%]">
+    <>
+      <div>
+        <div className="flex gap-5   md:m-3 lg:m-3 justify-start max-md:mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className=" max-md:text-[12px] flex gap-2 items-center  text-[#161B39]"
+          >
+            <i className="fa-solid fa-arrow-left-long" />
+            <h1>BACK</h1>{" "}
+          </button>
+          <h1 className="text-[#71717A] max-md:text-[12px] ">COURCES </h1>
+          <i
+            className="fa-solid fa-chevron-right md:mt-1"
+            style={{ color: "#71717a" }}
+          />
+          <h1 className="text-[#71717A] max-md:text-[12px]"> CS </h1>
+          <i
+            className="fa-solid fa-chevron-right md:mt-1"
+            style={{ color: "#71717a" }}
+          />
+          <h1 className="text-[#71717A] max-md:text-[12px] ">
+            {" "}
+            LECTURE ATTENDENCE REPORT{" "}
+          </h1>
+        </div>
+      </div>
+      <div className="  w-[90%] mx-auto mt-14">
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -93,7 +119,7 @@ export default function Excessiveabsencestudent() {
         </div>
       </div>
 
-      <div className="p-3 w-[90%]">
+      <div className="p-3 w-full  mx-auto">
         <div className="overflow-x-auto rounded-lg">
           <table className="min-w-full max-md:w-[100%] ">
             <thead className="">
@@ -182,6 +208,6 @@ export default function Excessiveabsencestudent() {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

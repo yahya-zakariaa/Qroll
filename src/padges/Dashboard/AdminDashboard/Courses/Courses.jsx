@@ -62,12 +62,6 @@ export default function Courses() {
         </div>
         <div className="flex ">
           <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 max-md:text-[13px]  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
-          <button
             onClick={() => navigate("/admin-dashboard/newCourse")}
             className=" max-md:text-[13px] flex items-center self-center justify-center bg-[#161B39] text-[white] m-2 w-48  rounded-[8px] h-11"
           >

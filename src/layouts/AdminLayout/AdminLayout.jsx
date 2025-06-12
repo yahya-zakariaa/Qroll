@@ -90,7 +90,12 @@ export default function AdminLayout() {
                   <div className="w-8 h-8 bg-black rounded-full">
                     <img src={avetarr} alt="" />
                   </div>
-                  <p> Dr mohamed </p>
+                  <p>
+                    {" "}
+                    {(localStorage.getItem("userName") &&
+                      JSON.stringify(localStorage.getItem("userName"))) ||
+                      "Admin"}
+                  </p>
                 </div>
               </li>
               <li onClick={closeSidebar}>
@@ -109,7 +114,7 @@ export default function AdminLayout() {
               </li>
               <li onClick={closeSidebar}>
                 <Link
-                  to="/admin-dashboard/profiledoctoer"
+                  to="/admin-dashboard/profile"
                   className="flex items-center p-1 text-white rounded-lg hover:bg-gray-700 group"
                 >
                   <span className="ml-0">

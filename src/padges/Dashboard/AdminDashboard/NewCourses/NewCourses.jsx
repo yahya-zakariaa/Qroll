@@ -3,10 +3,11 @@ import useAdminStore from "../../../../store/useAdminStore";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function NewCourses() {
   const { addCourse } = useAdminStore();
-
+  const navigate = useNavigate();
   const handleSubmit = async (data) => {
     console.log(data);
 
@@ -58,6 +59,13 @@ export default function NewCourses() {
     <div>
       <div className="lg:flex items-center  lg:justify-between ">
         <div className="flex  gap-2 m-3 lg:m-3 justify-self-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex gap-2 md:me-5 items-center  text-[#161B39]"
+          >
+            <i className="fa-solid fa-arrow-left-long" />
+            <h1>BACK</h1>
+          </button>
           <h1 className="text-[#71717A] ">Courses </h1>
           <i
             className="fa-solid fa-chevron-right mt-1"

@@ -87,12 +87,8 @@ export default function Filltersectionadmin() {
       <div className="lg:flex lg:justify-between items-center">
         <div className="flex gap-2 m-3 max-sm:m-5">
           <button
-            onClick={() =>
-              navigate(
-                "/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
-              )
-            }
-            className="max-md:text-[12px] flex gap-2 items-center text-[#161B39]"
+            onClick={() => navigate(-1)}
+            className="flex gap-2 md:me-5 items-center  text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />
             <h1>BACK</h1>
@@ -115,7 +111,7 @@ export default function Filltersectionadmin() {
         <div className="flex">
           <button
             onClick={() =>
-              navigate("/teacher-dashboard/coursestecher/addnewstudentteacher")
+              navigate(`/admin-dashboard/courses/${cid}/excessive-absence`)
             }
             className="flex items-center justify-center bg-[#161B39] text-white m-2 w-52 h-11 rounded-[8px]"
           >

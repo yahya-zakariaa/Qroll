@@ -111,12 +111,6 @@ export default function Allstudentdoctoer() {
           <h1 className="text-[#71717A] "> view all </h1>
         </div>
         <div className="flex ">
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 max-md:text-[13px]  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
           <button className=" max-md:text-[13px] items-center flex Students-center self-center justify-center bg-[#161B39] text-[white] m-2 w-48  rounded-[8px] h-11">
             <i className="fa-solid fa-plus" />
             <p
@@ -142,7 +136,7 @@ export default function Allstudentdoctoer() {
             Search
           </label>
           <div className="relative ">
-            <div className="absolute inset-y-0 flex Students-center pointer-events-none start-0 ps-3">
+            <div className="absolute top-1/2 -translate-y-1/2 flex Students-center pointer-events-none start-0 ps-3">
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"

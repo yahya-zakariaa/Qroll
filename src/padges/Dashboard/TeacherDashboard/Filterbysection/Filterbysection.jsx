@@ -24,7 +24,7 @@ export default function Filterbysection() {
     <div>
       <div className="flex gap-3 md:m-8 max-md:m-3 items-center">
         <button
-          onClick={() => navigate("/teacher-dashboard/coursestecher")}
+          onClick={() => navigate(-1)}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />

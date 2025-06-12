@@ -88,11 +88,7 @@ export default function LecturesFilterDoctor() {
       <div className="lg:flex lg:justify-between items-center">
         <div className="flex gap-2 m-3 max-sm:m-5">
           <button
-            onClick={() =>
-              navigate(
-                "/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
-              )
-            }
+            onClick={() => navigate(-1)}
             className="max-md:text-[12px] flex gap-2 items-center text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />
@@ -109,7 +105,7 @@ export default function LecturesFilterDoctor() {
             style={{ color: "#71717a" }}
           />
           <h1 className="text-[#71717A] max-md:text-[11px]">
-            Section Attendance Report
+            Lecture Attendance Report
           </h1>
         </div>
 
@@ -123,21 +119,13 @@ export default function LecturesFilterDoctor() {
             <img className="h-5" src={addd} alt="" />
             <p className="p-2">View Excessive Absence</p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 rounded-[8px] h-11"
-          >
-            Export to Excel Sheet
-          </button>
         </div>
       </div>
 
-      {/* Attendance Table */}
       <div className="px-4">
-        <h2 className="md:text-2xl mb-2">Lecture 3 Attendance</h2>
+        <h2 className="md:text-2xl mb-2">Lecture {lid} Attendance</h2>
 
-        {/* Search */}
-        <div className="w-[90%] my-6">
+        <div className="w-[90%] my-6 mx-auto">
           <div className="relative">
             <input
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -148,7 +136,7 @@ export default function LecturesFilterDoctor() {
             />
             <button
               onClick={handleSearch}
-              className="text-white absolute end-[2px] bottom-[2px] bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-7 py-4"
+              className="text-white absolute end-[2px] bottom-[2px] bg-[#161B39] hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-7 py-4"
             >
               Search
             </button>
@@ -156,7 +144,7 @@ export default function LecturesFilterDoctor() {
         </div>
 
         {/* Table */}
-        <div className="p-4 w-[90%] overflow-x-auto">
+        <div className="p-4 w-auto overflow-x-auto">
           <table className="w-full text-sm text-left border">
             <thead>
               <tr>

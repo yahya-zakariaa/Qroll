@@ -49,32 +49,6 @@ export default function Sectionfinalreport() {
       handleSearch();
     }
   };
-  const exportToExcel = () => {
-    const exportData = filteredStudents.map(
-      ({ id, name, studentId, numberabsence, percentage }) => ({
-        ID: id,
-        Name: name,
-        StudentID: studentId,
-        numberabsence: numberabsence,
-        percentage: percentage,
-      })
-    );
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "students.xlsx");
-  };
   useEffect(() => {
     FetchStudents();
   }, []);
@@ -107,7 +81,7 @@ export default function Sectionfinalreport() {
         <div className="flex ">
           <button
             onClick={() =>
-              navigate(`/teacher-dashboard/courses/${id}/add-student`)
+              navigate(`/teacher-dashboard/courses/${id}/excessive-absence`)
             }
             className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-52  rounded-[8px] h-11"
           >
@@ -116,8 +90,8 @@ export default function Sectionfinalreport() {
           </button>
         </div>
       </div>
-      <div className="w-full ">
-        <div className="  w-[90%] ">
+      <div className="w-full  mt-14">
+        <div className="  w-[90%] mx-auto ">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -160,7 +134,7 @@ export default function Sectionfinalreport() {
           </div>
         </div>
 
-        <div className="p-6 w-[90%]">
+        <div className="p-6 w-w-full ">
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full ">
               <thead className="">
@@ -208,7 +182,7 @@ export default function Sectionfinalreport() {
             </table>
           </div>
 
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center mt-10">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}

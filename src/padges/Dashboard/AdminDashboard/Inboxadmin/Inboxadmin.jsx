@@ -37,8 +37,8 @@ export default function Inboxadmin() {
     <div>
       <div className="flex gap-2 m-3 max-sm:m-5">
         <button
-          onClick={() => navigate("")}
-          className="flex gap-2 items-center  text-[#161B39]"
+          onClick={() => navigate(-1)}
+          className="flex gap-2 md:me-5 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />
           <h1>BACK</h1>

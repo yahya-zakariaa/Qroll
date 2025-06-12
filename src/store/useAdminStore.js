@@ -559,6 +559,18 @@ const useAdminStore = create((set) => ({
       throw message;
     }
   },
+  changePassword: async (data) => {
+    try {
+      const res = await axios.post("/change-password", data);
+      console.log(res);
+      toast.success("password reseted successfully");
+    } catch (error) {
+      console.log("change password error:", error);
+      const message = error.response?.data?.message || error.message;
+      console.error("take action Error:", message);
+      throw message;
+    }
+  },
 }));
 
 export default useAdminStore;

@@ -21,6 +21,7 @@ const useAuthStore = create((set) => ({
         error: null,
       });
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userName", res.data.user.name);
       return { role: res?.data?.user?.role };
     } catch (error) {
       const message = error.response?.data?.message || error.message;

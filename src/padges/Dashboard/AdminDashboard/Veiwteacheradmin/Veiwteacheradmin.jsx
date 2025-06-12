@@ -66,6 +66,13 @@ export default function Veiwteacheradmin() {
     <div>
       <div className="lg:flex items-center lg:justify-between ">
         <div className="flex gap-2 m-3 lg:m-3 justify-self-center">
+             <button
+            onClick={() => navigate(-1)}
+            className="flex gap-2 md:me-5 items-center  text-[#161B39]"
+          >
+            <i className="fa-solid fa-arrow-left-long" />
+            <h1>BACK</h1>
+          </button>
           <h1 className="text-[#71717A] ">Teachers </h1>
           <i
             className="fa-solid fa-chevron-right mt-1"
@@ -85,7 +92,7 @@ export default function Veiwteacheradmin() {
           <button
             onClick={() => {
               if (isEditing) {
-                formik.handleSubmit(); // لما يكون في وضع التعديل، اضغط حفظ
+                formik.handleSubmit(); 
               }
               setIsEditing(!isEditing);
             }}

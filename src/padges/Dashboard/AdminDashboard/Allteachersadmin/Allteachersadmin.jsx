@@ -77,40 +77,12 @@ export default function Allteachersadmin() {
     }
   };
 
-  const exportToExcel = () => {
-    const exportData = filteredUsers.map(
-      ({ id, name, national_id, phone, email, education }) => ({
-        ID: id,
-        Name: name,
-        "National ID": national_id,
-        Phone: phone,
-        Email: email,
-        Education: education,
-      })
-    );
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "Teacher.xlsx");
-  };
-
   return (
     <>
       <div className="lg:flex items-center  lg:justify-between ">
         <div className="flex  m-3 lg:m-3 gap-4 md:justify-start justify-around items-center">
           <button
-            onClick={() => navigate("/teacher-dashboard/coursestecher")}
+            onClick={() => navigate(-1)}
             className="flex gap-2 md:me-5 items-center  text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />
@@ -170,12 +142,6 @@ export default function Allteachersadmin() {
             </div>
           </div>
           <div className="flex ">
-            <button
-              onClick={exportToExcel}
-              className="border border-[#161B39] text-[#161B39] m-2 px-4 max-md:text-[13px]  rounded-[8px] py-2"
-            >
-              import to excel sheet
-            </button>
             <button className=" max-md:text-[13px] flex items-center self-center justify-center bg-[#161B39] text-[white] m-2 w-48  rounded-[8px] h-11">
               <i className="fa-solid fa-plus" />
               <p

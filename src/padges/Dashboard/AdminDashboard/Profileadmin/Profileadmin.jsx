@@ -137,7 +137,7 @@ export default function Profileadmin() {
           </button>
           <button
             onClick={() =>
-              navigate("/admin-dashboard/profiledoctoer/changepassowredadmin")
+              navigate("/admin-dashboard/profile/change-password")
             }
             className="border px-5 py-2.5 rounded-lg border-[#161B39] text-[#161B39] font-medium text-[16px] tracking-wider"
           >

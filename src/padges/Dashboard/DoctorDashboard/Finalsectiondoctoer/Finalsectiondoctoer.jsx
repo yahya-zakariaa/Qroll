@@ -49,32 +49,6 @@ export default function Finalsectiondoctoer() {
       handleSearch();
     }
   };
-  const exportToExcel = () => {
-    const exportData = filteredStudents.map(
-      ({ id, name, studentId, numberabsence, percentage }) => ({
-        ID: id,
-        Name: name,
-        StudentID: studentId,
-        numberabsence: numberabsence,
-        percentage: percentage,
-      })
-    );
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "students.xlsx");
-  };
   useEffect(() => {
     FetchStudents();
   }, []);
@@ -110,43 +84,16 @@ export default function Finalsectiondoctoer() {
             <p
               className="p-2"
               onClick={() =>
-                navigate(
-                  "/teacher-dashboard/coursestecher/addnewstudentteacher"
-                )
+                navigate(`/admin-dashboard/courses/${id}/excessive-absence`)
               }
             >
               view excessive absence{" "}
             </p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
         </div>
       </div>
       <div className="w-full ">
-        <div className="flex items-center justify-between">
-          <h2>number of lecture : 4</h2>
-          <button className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-32  rounded-[8px] h-11">
-            <p
-              className="p-2"
-              onClick={() =>
-                navigate(
-                  "/teacher-dashboard/coursestecher/addnewstudentteacher"
-                )
-              }
-            >
-              sort by{" "}
-            </p>
-            <i
-              className="fa-solid fa-caret-down"
-              style={{ color: "#ffffff" }}
-            />
-          </button>
-        </div>
-        <div className="  w-[90%] ">
+        <div className="  w-[90%] mx-auto mt-10 ">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -189,7 +136,7 @@ export default function Finalsectiondoctoer() {
           </div>
         </div>
 
-        <div className="p-6 w-[90%]">
+        <div className="p-6 w-full">
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full ">
               <thead className="">

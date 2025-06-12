@@ -110,7 +110,7 @@ export default function Adddocteradmin() {
       <div className="lg:flex items-center  lg:justify-between ">
         <div className="flex  m-3 lg:m-3 gap-4 md:justify-start justify-around items-center">
           <button
-            onClick={() => navigate("/teacher-dashboard/coursestecher")}
+            onClick={() => navigate(-1)}
             className="flex gap-2 md:me-5 items-center  text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />

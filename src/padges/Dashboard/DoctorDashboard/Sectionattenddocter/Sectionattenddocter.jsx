@@ -84,8 +84,8 @@ export default function Sectionattenddocter() {
     fetchStudents();
   }, []);
   return (
-    <div>
-      <div className="  w-[90%] max-md:w-[100%]">
+    <div className="w-full">
+      <div className="  w-full ">
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -121,16 +121,16 @@ export default function Sectionattenddocter() {
           />
           <button
             onClick={handleSearch}
-            className="text-white absolute end-[2px] bottom-[2px]  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-4 "
+            className="text-white absolute end-[2px] bottom-[2px] bg-[#161B39] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-4 "
           >
             Search
           </button>
         </div>
       </div>
 
-      <div className="p-3 w-[90%]">
+      <div className="p-3 w-full">
         <div className="overflow-x-auto rounded-lg">
-          <table className="min-w-full max-md:w-[100%] ">
+          <table className="w-full border">
             <thead className="">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-[#A1A1AA]">
@@ -184,16 +184,8 @@ export default function Sectionattenddocter() {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-end  max-md:justify-center mt-1 ">
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48  rounded-[8px] h-11"
-          >
-            import from excel sheet
-          </button>
-        </div>
 
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center mt-10">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}

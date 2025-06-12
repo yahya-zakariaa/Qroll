@@ -87,11 +87,7 @@ export default function Sectionattentencereport() {
       <div className="lg:flex lg:justify-between items-center">
         <div className="flex gap-2 m-3 max-sm:m-5">
           <button
-            onClick={() =>
-              navigate(
-                "/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
-              )
-            }
+            onClick={() => navigate(-1)}
             className="max-md:text-[12px] flex gap-2 items-center text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />
@@ -115,25 +111,19 @@ export default function Sectionattentencereport() {
         <div className="flex">
           <button
             onClick={() =>
-              navigate("/teacher-dashboard/coursestecher/addnewstudentteacher")
+              navigate(`/teacher-dashboard/courses/${id}/excessive-absence`)
             }
             className="flex items-center justify-center bg-[#161B39] text-white m-2 w-52 h-11 rounded-[8px]"
           >
             <img className="h-5" src={addd} alt="" />
             <p className="p-2">View Excessive Absence</p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 rounded-[8px] h-11"
-          >
-            Export to Excel Sheet
-          </button>
         </div>
       </div>
 
       {/* Attendance Table */}
       <div className="px-4">
-        <h2 className="md:text-2xl mb-2">Section 3 Attendance</h2>
+        <h2 className="md:text-2xl mb-2">Section {sid} Attendance</h2>
 
         {/* Search */}
         <div className="w-[90%] my-6">

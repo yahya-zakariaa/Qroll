@@ -57,31 +57,7 @@ export default function Sectionfilterdocter() {
     }
   };
 
-  const exportToExcel = () => {
-    const exportData = filteredItems.map(
-      ({ id, name, studentId, date, status }) => ({
-        ID: id,
-        Name: name,
-        StudentID: studentId,
-        Date: date,
-        Status: status,
-      })
-    );
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-    const dataBlob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-
-    saveAs(dataBlob, "students.xlsx");
-  };
   return (
     <div>
       <div className="lg:flex lg:justify-between items-center">
@@ -122,18 +98,12 @@ export default function Sectionfilterdocter() {
             <img className="h-5" src={addd} alt="" />
             <p className="p-2">View Excessive Absence</p>
           </button>
-          <button
-            onClick={exportToExcel}
-            className="border border-[#161B39] text-[#161B39] m-2 w-48 rounded-[8px] h-11"
-          >
-            Export to Excel Sheet
-          </button>
         </div>
       </div>
 
       {/* Attendance Table */}
       <div className="px-4">
-        <h2 className="md:text-2xl mb-2">Section 3 Attendance</h2>
+        <h2 className="md:text-2xl mb-2">Section {sid} Attendance</h2>
 
         {/* Search */}
         <div className="w-[90%] my-6">
@@ -147,7 +117,7 @@ export default function Sectionfilterdocter() {
             />
             <button
               onClick={handleSearch}
-              className="text-white absolute end-[2px] bottom-[2px] bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-7 py-4"
+              className="text-white absolute end-[2px] bottom-[2px] bg-[#161B39] hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-7 py-4"
             >
               Search
             </button>

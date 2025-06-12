@@ -78,6 +78,13 @@ export default function ViewDoctorAdmin() {
     <div>
       <div className="lg:flex items-center lg:justify-between ">
         <div className="flex gap-2 m-3 lg:m-3 justify-self-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex gap-2 md:me-5 items-center  text-[#161B39]"
+          >
+            <i className="fa-solid fa-arrow-left-long" />
+            <h1>BACK</h1>
+          </button>
           <h1 className="text-[#71717A] ">doctors </h1>
           <i
             className="fa-solid fa-chevron-right mt-1"

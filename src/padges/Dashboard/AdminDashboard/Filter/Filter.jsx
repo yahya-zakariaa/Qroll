@@ -35,8 +35,8 @@ export default function Filter() {
     <div>
       <div className="flex gap-3 md:m-10 max-md:m-3 items-center">
         <button
-          onClick={() => navigate("/doctor-dashboard/coursessdoctoer")}
-          className="flex gap-2 items-center  text-[#161B39]"
+          onClick={() => navigate(-1)}
+          className="flex gap-2 md:me-5 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />
           <h1>BACK</h1>

@@ -48,10 +48,10 @@ export default function Qrcodeleturedoctoer() {
     fetchLectures();
   }, [courseId]);
   return (
-    <div className="w-full">
-      <div className="flex gap-3 md:m-10 max-md:m-3 items-center">
+    <div className="w-full px-5">
+      <div className="flex gap-3 mb-10 mt-5 items-center">
         <button
-          onClick={() => navigate("/doctor-dashboard/coursessdoctoer")}
+          onClick={() => navigate(-1)}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />
@@ -148,13 +148,13 @@ export default function Qrcodeleturedoctoer() {
                   </div>
                 </div>
               </div>
-                    <a
-                      href={`data:image/png;base64,${qrData}`}
-                      download="lecture-qr.png"
-                      className="mt-4 inline-block bg-[#161B39]  text-white px-4 py-2 rounded-md"
-                    >
-                      Download
-                    </a>
+              <a
+                href={`data:image/png;base64,${qrData}`}
+                download="lecture-qr.png"
+                className="mt-4 inline-block bg-[#161B39]  text-white px-4 py-2 rounded-md"
+              >
+                Download
+              </a>
             </div>
           )}
         </div>
