@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 
 const useStudentStore = create((set) => ({
   getProfile: async (token) => {
@@ -100,6 +101,18 @@ const useStudentStore = create((set) => ({
     } catch (error) {
       const message = error.response?.data?.message || error.message;
       console.error("scan qr Error:", message);
+      throw message;
+    }
+  },
+  changePassword: async (data) => {
+    try {
+      const res = await axios.post("/change-password", data);
+      console.log(res);
+      toast.success("password reseted successfully");
+    } catch (error) {
+      console.log("change password error:", error);
+      const message = error.response?.data?.message || error.message;
+      console.error("take action Error:", message);
       throw message;
     }
   },
