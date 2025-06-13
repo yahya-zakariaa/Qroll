@@ -112,7 +112,7 @@ export default function LecturesFilterDoctor() {
         <div className="flex">
           <button
             onClick={() =>
-              navigate("/teacher-dashboard/coursestecher/addnewstudentteacher")
+              navigate(`/doctor-dashboard/courses/${cid}/excessive-absence`)
             }
             className="flex items-center justify-center bg-[#161B39] text-white m-2 w-52 h-11 rounded-[8px]"
           >
