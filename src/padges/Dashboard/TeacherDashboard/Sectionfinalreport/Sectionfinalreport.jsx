@@ -73,7 +73,7 @@ export default function Sectionfinalreport() {
           />
           <h1 className="text-[#71717A] max-md:text-[12px] ">
             {" "}
-            LECTURE ATTENDENCE REPORT{" "}
+            SECTION ATTENDENCE REPORT{" "}
           </h1>
         </div>
         <div className="flex ">

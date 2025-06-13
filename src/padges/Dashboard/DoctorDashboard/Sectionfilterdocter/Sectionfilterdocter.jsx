@@ -62,11 +62,7 @@ export default function Sectionfilterdocter() {
       <div className="lg:flex lg:justify-between items-center">
         <div className="flex gap-2 m-3 max-sm:m-5">
           <button
-            onClick={() =>
-              navigate(
-                "/doctor-dashboard/coursessdoctoer/filterletureeorsectiondoctoer"
-              )
-            }
+            onClick={() => navigate(-1)}
             className="max-md:text-[12px] flex gap-2 items-center text-[#161B39]"
           >
             <i className="fa-solid fa-arrow-left-long" />

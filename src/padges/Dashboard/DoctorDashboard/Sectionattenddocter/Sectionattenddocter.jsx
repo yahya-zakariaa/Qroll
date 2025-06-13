@@ -175,7 +175,6 @@ export default function Sectionattenddocter() {
                   <td className="px-4 py-2 text-sm text-gray-600">
                     {student.lecture_numbers}{" "}
                   </td>
-
                   <td className="px-4 py-2 text-sm text-gray-600">
                     {student.absence_percentage}{" "}
                   </td>

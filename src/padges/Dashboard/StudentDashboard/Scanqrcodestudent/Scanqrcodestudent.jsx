@@ -15,22 +15,13 @@ export default function ScanQrCodeStudent() {
   const [cameraError, setCameraError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [scannerActive, setScannerActive] = useState(true);
-  const [scanResult, setScanResult] = useState(null);
 
   useEffect(() => {
     const checkCamera = async () => {
       try {
-        if (!navigator.mediaDevices?.enumerateDevices) {
-          throw new Error("This browser doesn't support camera devices");
-        }
-
         const devices = await navigator.mediaDevices.enumerateDevices();
         const hasCamera = devices.some((d) => d.kind === "videoinput");
-
-        if (!hasCamera) {
-          throw new Error("No camera available");
-        }
-
+        if (!hasCamera) throw new Error("No camera available");
         setCameraAvailable(true);
       } catch (err) {
         setCameraAvailable(false);
@@ -48,40 +39,40 @@ export default function ScanQrCodeStudent() {
   useEffect(() => {
     if (!cameraAvailable || !scannerActive) return;
     if (scannerRef.current) return;
-
     const initScanner = () => {
       try {
-        const scanner = new Html5QrcodeScanner(
-          "reader",
-          {
-            fps: 10,
-            qrbox: 250,
-            rememberLastUsedCamera: true,
-          },
-          true
-        );
+        const scanner = new Html5QrcodeScanner("reader", {
+          fps: 10,
+          qrbox: 250,
+        });
 
         scanner.render(
           async (decodedText) => {
             if (hasScannedRef.current) return;
             hasScannedRef.current = true;
-
             try {
               await handleScan(decodedText);
             } finally {
-              hasScannedRef.current = false;
+              setTimeout(() => {
+                hasScannedRef.current = false;
+              }, 2000); // delay لإعادة التفعيل بعد التنقل أو الخطأ
             }
           },
           (error) => {
+            if (
+              error?.name === "NotFoundException" ||
+              error?.includes("NotFoundException")
+            )
+              return;
             console.error("Scanner error:", error);
-            setCameraError("Scanner error: " + error.message);
+            setCameraError("Scanner error: " + (error?.message || error));
             setCameraAvailable(false);
           }
         );
 
         scannerRef.current = scanner;
       } catch (err) {
-        console.error("Scanner initialization failed:", err);
+        console.error("Scanner init failed:", err);
         setCameraError("Failed to initialize scanner");
       }
     };
@@ -90,9 +81,9 @@ export default function ScanQrCodeStudent() {
 
     return () => {
       if (scannerRef.current) {
-        scannerRef.current.clear().catch((err) => {
-          console.error("Failed to stop scanner:", err);
-        });
+        scannerRef.current
+          .clear()
+          .catch((err) => console.error("Failed to stop scanner:", err));
         scannerRef.current = null;
       }
     };
@@ -100,7 +91,6 @@ export default function ScanQrCodeStudent() {
 
   const handleScan = async (decodedText) => {
     setIsLoading(true);
-
     try {
       let data;
       try {
@@ -110,30 +100,24 @@ export default function ScanQrCodeStudent() {
       }
 
       if (
-        !data.timestamp &&
-        !data.courseId &&
-        !data.lecture_id &&
+        !data.timestamp ||
+        !data.courseId ||
+        !data.lecture_id ||
         !data.signature
       ) {
         throw new Error("Invalid QR code format");
       }
 
-      setScanResult(data);
-
-      try {
-        const message = await scanLectureQr(data);
-        toast.success(message);
-        navigate(`/student-dashboard/courses/${id}/scan-done`, {
-          state: { success: true, data },
-        });
-      } catch (err) {
-        toast.error(err);
-        console.error("Backend error:", err);
-      }
+      const message = await scanLectureQr(data);
+      toast.success(message);
+      navigate(`/student-dashboard/courses/${id}/scan-done`, {
+        state: { success: true, data },
+      });
     } catch (err) {
       console.error("Scan error:", err);
+      toast.error(err.message || "Scan failed");
       navigate(
-        "/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee",
+        `/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee`,
         {
           state: {
             success: false,

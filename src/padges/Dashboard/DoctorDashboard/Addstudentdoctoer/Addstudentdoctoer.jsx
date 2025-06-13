@@ -27,7 +27,7 @@ export default function Addstudentdoctoer() {
         <div className="flex gap-2 m-6  max-sm:m-5">
           <button
             onClick={() =>
-              navigate("/doctor-dashboard/coursessdoctoer/allstudentdoctoer")
+              navigate(-1)
             }
             className="flex gap-2 items-center  text-[#161B39]"
           >
