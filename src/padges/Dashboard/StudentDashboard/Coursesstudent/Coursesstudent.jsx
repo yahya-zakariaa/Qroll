@@ -2,13 +2,26 @@ import qrcode from "../../../../assets/qr-code-svgrepo-com.png";
 import vectorright from "../../../../assets/Vector (8).png";
 import lucture from "../../../../assets/Group 3.png";
 import sectionattend from "../../../../assets/lecture-conference-svgrepo-com.png";
-import { Link, Navigate, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 export default function Coursesstudent() {
   const { id } = useParams();
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="flex gap-2 items-center m-6 max-sm:m-5">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-[#161B39] mb-4"
+        >
+          <span>Back</span>
+        </button>
         <h1 className="text-[#71717A] ">COURCES </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
         <h1 className="text-[#71717A] "> CS </h1>

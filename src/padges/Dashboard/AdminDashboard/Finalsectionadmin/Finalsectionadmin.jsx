@@ -1,14 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import React, { useEffect, useState } from "react";
 import left from "../../../../assets/Chevron left.png";
 import right from "../../../../assets/Chevron right.png";
-
 import addd from "../../../../assets/danger-svgrepo-com (1).png";
-import useTeacherStore from "../../../../store/useTeacherStore";
-export default function Sectionfinalreport() {
+import useDoctorStore from "../../../../store/useDoctorStore";
+
+export default function Finalsectiondoctoer() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { finalSectionsReport } = useTeacherStore();
+  const { finalSectionsReport } = useDoctorStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState();
@@ -77,19 +79,21 @@ export default function Sectionfinalreport() {
           </h1>
         </div>
         <div className="flex ">
-          <button
-            onClick={() =>
-              navigate(`/teacher-dashboard/courses/${id}/excessive-absence`)
-            }
-            className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-52  rounded-[8px] h-11"
-          >
+          <button className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-52  rounded-[8px] h-11">
             <img className="h-5" src={addd} alt="" />
-            <p className="p-2">view excessive absence </p>
+            <p
+              className="p-2"
+              onClick={() =>
+                navigate(`/admin-dashboard/courses/${id}/excessive-absence`)
+              }
+            >
+              view excessive absence{" "}
+            </p>
           </button>
         </div>
       </div>
-      <div className="w-full  mt-14">
-        <div className="  w-[90%] mx-auto ">
+      <div className="w-full ">
+        <div className="  w-[90%] mx-auto mt-10 ">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -132,7 +136,7 @@ export default function Sectionfinalreport() {
           </div>
         </div>
 
-        <div className="p-6 w-w-full ">
+        <div className="p-6 w-full">
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full ">
               <thead className="">
@@ -180,7 +184,7 @@ export default function Sectionfinalreport() {
             </table>
           </div>
 
-          <div className="flex items-center justify-center mt-10">
+          <div className="flex items-center justify-center ">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}

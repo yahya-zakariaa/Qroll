@@ -41,7 +41,7 @@ export default function Sectionattendstudent() {
     <div>
       <div className="flex gap-6 md:m-10 max-md:m-3 items-center">
         <button
-          onClick={() => navigate("/student-dashboard/coursesstudent")}
+          onClick={() => navigate(-1)}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />
@@ -61,6 +61,7 @@ export default function Sectionattendstudent() {
                 <thead className="">
                   <tr>
                     <th className="p-2 text-[#A1A1AA] ">section number</th>
+                    <th className="p-2 text-[#A1A1AA] "> section name</th>
                     <th className="p-2 text-[#A1A1AA] "> Date</th>
                     <th className="p-2 text-[#A1A1AA] text-center">status</th>
                   </tr>
@@ -68,8 +69,13 @@ export default function Sectionattendstudent() {
                 <tbody>
                   {currentSections.map((item) => (
                     <tr key={item.id} className="border-t">
-                      <td className="p-2 ">{item.section_id}</td>
-                      <td className="p-2 ">{item.date}</td>
+                      <td className="p-2 ">{item?.section?.id}</td>
+                      <td className="p-2 ">
+                        {item?.section?.name}
+                      </td>
+                      <td className="p-2 ">
+                        {new Date(item?.section?.created_at).toLocaleDateString()}
+                      </td>
                       <td className="p-2 text-center ">
                         <span
                           className={`px-2 py-1 text-xs font-semibold rounded-full ${

@@ -1,4 +1,3 @@
-import back from "../../../../assets/Frame 129.png";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import left from "../../../../assets/Chevron left.png";
@@ -39,7 +38,7 @@ export default function Indexstudent() {
     <div>
       <div className="flex gap-2 m-3 max-sm:m-5">
         <button
-          onClick={() => navigate("/student-dashboard/coursesstudent")}
+          onClick={() => navigate(-1)}
           className="flex gap-2 items-center  text-[#161B39]"
         >
           <i className="fa-solid fa-arrow-left-long" />

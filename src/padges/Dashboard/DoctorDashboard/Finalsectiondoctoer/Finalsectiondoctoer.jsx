@@ -84,7 +84,7 @@ export default function Finalsectiondoctoer() {
             <p
               className="p-2"
               onClick={() =>
-                navigate(`/admin-dashboard/courses/${id}/excessive-absence`)
+                navigate(`/doctor-dashboard/courses/${id}/excessive-absence`)
               }
             >
               view excessive absence{" "}

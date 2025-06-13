@@ -41,6 +41,7 @@ import Filterletureeorsectiondoctoer from "../../padges/Dashboard/DoctorDashboar
 import Sectionfilterdocter from "../../padges/Dashboard/DoctorDashboard/Sectionfilterdocter/Sectionfilterdocter";
 import Lecturesfilterdoctoer from "../../padges/Dashboard/DoctorDashboard/Lecturesfilterdoctoer/Lecturesfilterdoctoer";
 import Finalsectiondoctoer from "../../padges/Dashboard/DoctorDashboard/Finalsectiondoctoer/Finalsectiondoctoer";
+import Finalsectionadmin from "../../padges/Dashboard/AdminDashboard/Finalsectionadmin/Finalsectionadmin";
 import Finalleturesdoctoer from "../../padges/Dashboard/DoctorDashboard/Finalleturesdoctoer/Finalleturesdoctoer";
 import Excessiveabsencestudent from "../../padges/Dashboard/TeacherDashboard/Excessiveabsencestudent/Excessiveabsencestudent";
 import Profileadmin from "../../padges/Dashboard/AdminDashboard/Profileadmin/Profileadmin";
@@ -87,10 +88,7 @@ export default function Approutes() {
         <Route element={<ProtectedRoute />}>
           <Route path="/admin-dashboard" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route
-              path="/admin-dashboard/profile"
-              element={<Profileadmin />}
-            />
+            <Route path="/admin-dashboard/profile" element={<Profileadmin />} />
             <Route
               path="/admin-dashboard/profile/change-password"
               element={<Changepassowredadmin />}
@@ -185,7 +183,7 @@ export default function Approutes() {
             />
             <Route
               path="/admin-dashboard/courses/:id/sections/report"
-              element={<Sectionreportadmin />}
+              element={<Finalsectionadmin />}
             />
             <Route
               path="/admin-dashboard/courses/:id/lectures/report"

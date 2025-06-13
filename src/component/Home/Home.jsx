@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex w-full h-screen o flex-col justify-start items-center md:overflow-hidden   ">
+      <div className="flex w-full h-screen  flex-col justify-start items-center    ">
         <nav className="flex justify-between md:px-16 items-center w-full  px-10 py-5 ">
           <img className="w-[30%] md:w-[200px]" src={img2} alt="" />
 
