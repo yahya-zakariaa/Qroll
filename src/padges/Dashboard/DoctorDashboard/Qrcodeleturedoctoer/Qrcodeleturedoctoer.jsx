@@ -16,8 +16,8 @@ export default function Qrcodeleturedoctoer() {
   const [lectures, setLectures] = useState([]);
   const getQrCode = async (id) => {
     try {
-      console.log(id);
       const res = await generateQr(id);
+      console.log(res);
       setQrData(res);
       setQrVisible(true);
     } catch (error) {
