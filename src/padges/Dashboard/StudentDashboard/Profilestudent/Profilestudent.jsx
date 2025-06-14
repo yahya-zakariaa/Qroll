@@ -139,7 +139,7 @@ export default function Profilestudent() {
           </button>
           <button
             onClick={() =>
-              navigate("/student-dashboard/profile/change-passwords")
+              navigate("/student-dashboard/profile/change-password")
             }
             className="border px-5 py-2.5 rounded-lg border-[#161B39] text-[#161B39] font-medium text-[16px] tracking-wider"
           >

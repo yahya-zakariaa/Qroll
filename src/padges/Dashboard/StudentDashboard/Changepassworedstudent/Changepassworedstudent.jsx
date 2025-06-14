@@ -6,8 +6,12 @@ export default function Changepassworedstudent() {
   const { changePassword } = useStudentStore();
   const handleChangePassword = async (data) => {
     const formData = new FormData();
-    formData.append("old_Password", data.old_password.trim());
+    formData.append("old_password", data.old_password.trim());
     formData.append("new_password", data.new_password.trim());
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ":" + pair[1]);
+    // }
+
     try {
       await changePassword(formData);
     } catch (error) {

@@ -24,14 +24,13 @@ export default function ScanQrCodeStudent() {
       try {
         data = JSON.parse(decodedText);
         console.log(data);
-        
       } catch {
         data = { qr: decodedText };
       }
 
       if (
         !data.timestamp ||
-        !data.courseId ||
+        !data.course_id ||
         !data.lecture_id ||
         !data.signature
       ) {
@@ -45,7 +44,7 @@ export default function ScanQrCodeStudent() {
       });
     } catch (err) {
       console.log(err);
-      
+
       toast.error(err.message || "Invalid QR code");
       navigate(`/student-dashboard/courses/${id}/scan-done`, {
         state: { success: false, message: err.message || "Scan failed" },
@@ -166,7 +165,11 @@ export default function ScanQrCodeStudent() {
       <div
         id="reader"
         className={`  rounded-lg overflow-hidden border 
-          ${isScanning ? "border-[#161B39] w-[300px] h-[200px] md:w-[400px] md:h-[300px]" : ""} 
+          ${
+            isScanning
+              ? "border-[#161B39] w-[300px] h-[200px] md:w-[400px] md:h-[300px]"
+              : ""
+          } 
           flex items-center justify-center`}
       ></div>
 
