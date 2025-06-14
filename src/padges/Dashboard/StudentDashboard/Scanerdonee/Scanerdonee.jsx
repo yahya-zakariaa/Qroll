@@ -15,13 +15,13 @@ export default function ScanDone() {
         {state?.success ? "✓" : "✗"}
       </div>
 
-      <h1 className="text-2xl font-bold mb-10">
+      <h1 className="text-xl text-center font-bold mb-10">
         {state?.success
           ? "Attendance Recorded Successfully!"
           : "Attendance Failed"}
       </h1>
 
-      {state?.message && <p className="text-red-500 mb-4">{state.message}</p>}
+      {state?.message && <p className="text-red-500 mb-4 text-center">{state.message}</p>}
 
       <button
         onClick={() => navigate(`/student-dashboard/courses/${id}`)}
