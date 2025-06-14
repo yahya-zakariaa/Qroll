@@ -5,10 +5,12 @@ import filliter from "../../../../assets/filter-svgrepo-com 1.png";
 import sectionte from "../../../../assets/section-svgrepo-com.png";
 import reportleture from "../../../../assets/book-education-learning-school-study-2-svgrepo-com.png";
 import denger from "../../../../assets/danger-svgrepo-com.png";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 export default function coursessdoctoer() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { courseName } = location.state || {};
   return (
     <div className="">
       <div className="flex gap-2 items-center m-6 max-sm:m-5">
@@ -21,7 +23,7 @@ export default function coursessdoctoer() {
         </button>
         <h1 className="text-[#71717A] ">COURCES </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A] "> CS </h1>
+        <h1 className="text-[#71717A] "> {courseName} </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
       </div>
       <div className="md:relative ">

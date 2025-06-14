@@ -6,12 +6,15 @@ import {
   Link,
   Navigate,
   Outlet,
+  useLocation,
   useNavigate,
   useParams,
 } from "react-router-dom";
 
 export default function Coursesstudent() {
   const { id } = useParams();
+  const location = useLocation();
+  const { courseName } = location.state || {};
   const navigate = useNavigate();
   return (
     <div className="">
@@ -24,7 +27,7 @@ export default function Coursesstudent() {
         </button>
         <h1 className="text-[#71717A] ">COURCES </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
-        <h1 className="text-[#71717A] "> CS </h1>
+        <h1 className="text-[#71717A] "> {courseName} </h1>
         <i className="fa-solid fa-chevron-right" style={{ color: "#71717a" }} />
       </div>
       <div className="md:relative ">

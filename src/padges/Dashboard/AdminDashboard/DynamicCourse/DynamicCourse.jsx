@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import qrcode from "../../../../assets/qr-code-svgrepo-com.png";
 import vectorright from "../../../../assets/Vector (8).png";
 import studentvector from "../../../../assets/students-on-lecture-svgrepo-com (1).png";
@@ -13,6 +13,8 @@ import { useEffect } from "react";
 import useAdminStore from "../../../../store/useAdminStore";
 export default function DynamicCourse() {
   const { id } = useParams();
+  const location = useLocation();
+  const { courseName } = location.state || {};
   const { getCourse } = useAdminStore();
   const navigate = useNavigate();
   const [course, setCourse] = useState({});

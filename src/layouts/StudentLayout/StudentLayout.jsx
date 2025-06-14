@@ -92,7 +92,8 @@ export default function StudentLayout() {
                     </div>
                     <p>
                       {(localStorage.getItem("userName") &&
-                        localStorage.getItem("userName")) || "Student"}
+                        localStorage.getItem("userName")) ||
+                        "Student"}
                     </p>
                   </div>
                 </Link>
@@ -161,6 +162,7 @@ export default function StudentLayout() {
                     <li>
                       <Link
                         to={`/student-dashboard/courses/${course.id}`}
+                        state={{ courseName: course.name }}
                         className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group text-white hover:bg-gray-700"
                       >
                         <span className="ml-0"> </span>
@@ -210,7 +212,7 @@ export default function StudentLayout() {
                       d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                     />
                   </svg>
-                  <span className="flex-1 ms-3 whitespace-nowrap">Sign In</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
                 </Link>
               </li>
             </ul>

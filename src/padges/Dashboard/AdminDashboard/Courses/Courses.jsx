@@ -75,7 +75,11 @@ export default function Courses() {
         {courses?.map((course) => (
           <button
             key={course.id}
-            onClick={() => navigate(`/admin-dashboard/courses/${course?.id}`)}
+            onClick={() =>
+              navigate(`/admin-dashboard/courses/${course?.id}`, {
+                state: { courseName: course.name },
+              })
+            }
             className="md:w-[20%] w-full py-4 border-[1px] border-[#161B39] text-[#161B39] transition-all duration-300 font-medium text-lg tracking-wide hover:text-white hover:bg-[#161B39] rounded-[7px] flex items-center justify-center gap-2"
           >
             {course?.name}
