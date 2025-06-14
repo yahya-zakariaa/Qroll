@@ -65,7 +65,7 @@ export default function ScanQrCodeStudent() {
     setCameraError("");
 
     try {
-      const config = { fps: 10, qrbox: 250 };
+      const config = { fps: 10, qrbox: 200 };
       const qrCodeScanner = new Html5Qrcode("reader");
       qrRef.current = qrCodeScanner;
 
@@ -166,7 +166,7 @@ export default function ScanQrCodeStudent() {
       <div
         id="reader"
         className={`  rounded-lg overflow-hidden border 
-          ${isScanning ? "border-[#161B39] w-[400px] h-[300px] md:w-[400px] md:h-[300px]" : ""} 
+          ${isScanning ? "border-[#161B39] w-[300px] h-[200px] md:w-[400px] md:h-[300px]" : ""} 
           flex items-center justify-center`}
       ></div>
 
