@@ -92,8 +92,7 @@ export default function StudentLayout() {
                     </div>
                     <p>
                       {(localStorage.getItem("userName") &&
-                        localStorage.getItem("userName")) ||
-                        "Admin"}
+                        localStorage.getItem("userName")) || "Student"}
                     </p>
                   </div>
                 </Link>
@@ -114,7 +113,7 @@ export default function StudentLayout() {
               </li>
               <li onClick={closeSidebar}>
                 <Link
-                  to="/student-dashboard/profilestudent"
+                  to="/student-dashboard/profile"
                   className="flex items-center p-2  rounded-lg text-white hover:bg-gray-700 group"
                 >
                   <span className="ml-0">

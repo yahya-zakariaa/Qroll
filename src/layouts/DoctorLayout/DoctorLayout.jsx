@@ -91,7 +91,7 @@ export default function DoctorLayout() {
                     {" "}
                     {(localStorage.getItem("userName") &&
                       localStorage.getItem("userName")) ||
-                      "Admin"}
+                      "Doctor"}
                   </p>
                 </div>
               </li>

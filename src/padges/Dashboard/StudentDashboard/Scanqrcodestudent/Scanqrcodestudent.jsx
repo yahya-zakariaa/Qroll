@@ -1,96 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
+import React, { useEffect, useRef, useState } from "react";
+import { Html5Qrcode } from "html5-qrcode";
 import { useNavigate, useParams } from "react-router-dom";
 import useStudentStore from "../../../../store/useStudentStore";
 import toast from "react-hot-toast";
 
 export default function ScanQrCodeStudent() {
+  const { scanLectureQr } = useStudentStore();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { scanLectureQr } = useStudentStore();
-  const scannerRef = useRef(null);
+  const qrRef = useRef(null);
   const hasScannedRef = useRef(false);
-  const isMountedRef = useRef(true);
-  const [cameraAvailable, setCameraAvailable] = useState(true);
-  const [cameraError, setCameraError] = useState("");
+  const [isScanning, setIsScanning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [scannerActive, setScannerActive] = useState(true);
-
-  useEffect(() => {
-    const checkCamera = async () => {
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const hasCamera = devices.some((d) => d.kind === "videoinput");
-        if (!hasCamera) throw new Error("No camera available");
-        setCameraAvailable(true);
-      } catch (err) {
-        setCameraAvailable(false);
-        setCameraError(err.message);
-      }
-    };
-
-    checkCamera();
-
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!cameraAvailable || !scannerActive) return;
-    if (scannerRef.current) return;
-    const initScanner = () => {
-      try {
-        const scanner = new Html5QrcodeScanner("reader", {
-          fps: 10,
-          qrbox: 250,
-        });
-
-        scanner.render(
-          async (decodedText) => {
-            if (hasScannedRef.current) return;
-            hasScannedRef.current = true;
-            try {
-              await handleScan(decodedText);
-            } finally {
-              setTimeout(() => {
-                hasScannedRef.current = false;
-              }, 2000); // delay لإعادة التفعيل بعد التنقل أو الخطأ
-            }
-          },
-          (error) => {
-            if (
-              error?.name === "NotFoundException" ||
-              error?.includes("NotFoundException")
-            )
-              return;
-            console.error("Scanner error:", error);
-            setCameraError("Scanner error: " + (error?.message || error));
-            setCameraAvailable(false);
-          }
-        );
-
-        scannerRef.current = scanner;
-      } catch (err) {
-        console.error("Scanner init failed:", err);
-        setCameraError("Failed to initialize scanner");
-      }
-    };
-
-    initScanner();
-
-    return () => {
-      if (scannerRef.current) {
-        scannerRef.current
-          .clear()
-          .catch((err) => console.error("Failed to stop scanner:", err));
-        scannerRef.current = null;
-      }
-    };
-  }, [cameraAvailable, scannerActive]);
+  const [cameraError, setCameraError] = useState("");
 
   const handleScan = async (decodedText) => {
+    if (hasScannedRef.current) return;
+    hasScannedRef.current = true;
     setIsLoading(true);
+
     try {
       let data;
       try {
@@ -105,150 +33,158 @@ export default function ScanQrCodeStudent() {
         !data.lecture_id ||
         !data.signature
       ) {
-        throw new Error("Invalid QR code format");
+        throw new Error("Invalid QR code");
       }
 
-      const message = await scanLectureQr(data);
-      toast.success(message);
+      await scanLectureQr(data);
+      toast.success("Scanned successfully");
       navigate(`/student-dashboard/courses/${id}/scan-done`, {
         state: { success: true, data },
       });
     } catch (err) {
-      console.error("Scan error:", err);
-      toast.error(err.message || "Scan failed");
-      navigate(
-        `/student-dashboard/coursesstudent/scanqrcodestudent/scanerdonee`,
-        {
-          state: {
-            success: false,
-            message: err.message || "Failed to process QR code",
-          },
-        }
-      );
+      toast.error(err.message || "Invalid QR code");
+      navigate(`/student-dashboard/courses/${id}/scan-done`, {
+        state: { success: false, message: err.message || "Scan failed" },
+      });
     } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        hasScannedRef.current = false;
+      }, 2000);
     }
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const startScan = async () => {
+    if (isScanning || !document.getElementById("reader")) return;
 
-    e.target.value = "";
-
-    if (!file.type.startsWith("image/")) {
-      alert("⚠️ Please upload an image file only");
-      return;
-    }
-
-    setIsLoading(true);
-    setScannerActive(false);
+    setIsScanning(true);
+    setCameraError("");
 
     try {
-      if (scannerRef.current) {
-        await scannerRef.current.clear();
-        scannerRef.current = null;
-      }
+      const config = { fps: 10, qrbox: 250 };
+      const qrCodeScanner = new Html5Qrcode("reader");
+      qrRef.current = qrCodeScanner;
 
-      const html5QrCode = new Html5Qrcode("reader");
-      const result = await html5QrCode.scanFile(file, true);
-      await handleScan(result);
+      await qrCodeScanner.start(
+        { facingMode: "environment" },
+        config,
+        handleScan,
+        (error) => console.warn("Scan error:", error)
+      );
     } catch (err) {
-      console.error("Image scan failed:", err);
-      alert("❌ Failed to read QR code from image");
-    } finally {
-      setScannerActive(true);
-      setIsLoading(false);
+      console.error("Start failed:", err);
+      setCameraError("Camera access denied or not available.");
+      setIsScanning(false);
     }
   };
 
-  const retryCamera = () => {
-    setCameraError("");
-    setCameraAvailable(true);
-    setScannerActive(true);
+  const stopScan = async () => {
+    if (!qrRef.current) return;
+    try {
+      await qrRef.current.stop();
+      await qrRef.current.clear();
+      qrRef.current = null;
+      setIsScanning(false);
+    } catch (err) {
+      console.error("Stop failed:", err);
+    }
   };
 
+  useEffect(() => {
+    return () => {
+      if (qrRef.current) {
+        qrRef.current
+          .stop()
+          .then(() => qrRef.current.clear())
+          .catch((err) => console.warn("Scanner cleanup failed:", err.message));
+      }
+    };
+  }, []);
+
   return (
-    <div>
-      <div className="flex gap-6 md:m-10 max-md:m-3 items-center flex-wrap">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex gap-2 items-center text-[#161B39]"
-        >
-          <i className="fa-solid fa-arrow-left-long" />
-          <h1>Back</h1>
-        </button>
+    <div className="px-6 py-20 flex flex-col items-center gap-4">
+      <h1 className="text-2xl font-bold text-[#161B39]">Scan QR Code</h1>
+      <p className="text-md text-gray-800 text-center max-w-md">
+        Press <span className="font-semibold">Start Scan</span> and point your
+        camera at the QR code
+      </p>
 
-        <div className="flex items-center gap-1">
-          <i className="fa-solid fa-chevron-right text-[#71717a]" />
-          <h1 className="text-[#71717A]">Courses</h1>
-          <i className="fa-solid fa-chevron-right text-[#71717a]" />
-          <h1 className="text-[#71717A]">CS</h1>
-          <i className="fa-solid fa-chevron-right text-[#71717a]" />
-          <h1 className="text-[#71717A]">Scan QR Code</h1>
+      {isLoading && (
+        <div className="flex flex-col items-center mt-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#161B39]"></div>
+          <p className="mt-2 text-[#161B39] font-medium">Processing...</p>
         </div>
-      </div>
-
-      <div className="flex flex-col items-center p-4">
-        <h1 className="mb-4 text-xl font-bold text-center">
-          {cameraAvailable
-            ? "Point your camera at the QR code"
-            : "Please allow camera access"}
-        </h1>
-
-        {isLoading && (
-          <div className="mb-4 flex flex-col items-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#161B39]"></div>
-            <p className="mt-2 text-[#161B39]">Processing...</p>
-          </div>
-        )}
-
+      )}
+      {!isScanning && (
         <div
-          id="reader"
-          className={`w-full max-w-md ${isLoading ? "hidden" : ""}`}
-        ></div>
+          className={`flex flex-col items-center justify-center border rounded-lg w-[400px] h-[300px] ${
+            cameraError ? "bg-red-300" : ""
+          }`}
+        >
+          {!cameraError && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="60"
+              height="60"
+              viewBox="0 0 20 20"
+            >
+              <g fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M13 6.5H7A2.5 2.5 0 0 0 4.5 9v5A2.5 2.5 0 0 0 7 16.5h6a2.5 2.5 0 0 0 2.5-2.5v-.024l2.348 1.565a.5.5 0 0 0 .777-.416v-7a.5.5 0 0 0-.777-.416L15.5 9.274V9A2.5 2.5 0 0 0 13 6.5"
+                  clip-rule="evenodd"
+                  opacity="0.2"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M11 4.5H5A2.5 2.5 0 0 0 2.5 7v5A2.5 2.5 0 0 0 5 14.5h6a2.5 2.5 0 0 0 2.5-2.5V7A2.5 2.5 0 0 0 11 4.5M3.5 7A1.5 1.5 0 0 1 5 5.5h6A1.5 1.5 0 0 1 12.5 7v5a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 12z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M15.728 5.58L12.75 7.517a.5.5 0 0 0-.228.414l-.027 2.612a.5.5 0 0 0 .227.425l3.004 1.952a.5.5 0 0 0 .773-.419V6a.5.5 0 0 0-.773-.42m-.226 6l-2.001-1.301l.021-2.07l1.98-1.287z"
+                  clip-rule="evenodd"
+                />
+                <path d="M1.15 1.878a.514.514 0 0 1 .728-.727l16.971 16.971a.514.514 0 0 1-.727.727z" />
+              </g>
+            </svg>
+          )}
+          <p
+            className={`text-[18px] font-bold text-center mt-5 ${
+              cameraError ? "text-red-600" : "text-[#161B39]"
+            }`}
+          >
+            {cameraError || "No Camera Access"}
+          </p>
+        </div>
+      )}
 
-        {cameraError && (
-          <div className="my-4 p-3 bg-red-100 text-red-700 rounded-lg max-w-md text-center">
-            {cameraError}
-          </div>
+      <div
+        id="reader"
+        className={`  rounded-lg overflow-hidden border 
+          ${isScanning ? "border-[#161B39] w-[400px] h-[300px]" : ""} 
+          flex items-center justify-center`}
+      ></div>
+
+      <div className="mt-4">
+        {!isScanning && (
+          <button
+            onClick={startScan}
+            disabled={isLoading}
+            className="bg-[#161B39] hover:opacity-90 text-white px-6 py-2 rounded-lg shadow"
+          >
+            <i className="fa-solid fa-play mr-2"></i> Start Scan
+          </button>
         )}
 
-        <div className="flex flex-col gap-4 mt-6 w-full max-w-md">
-          {!cameraAvailable && (
-            <button
-              onClick={retryCamera}
-              className="bg-[#161B39] h-12 text-white rounded flex justify-center items-center gap-2"
-              disabled={isLoading}
-            >
-              <i className="fa-solid fa-rotate-right"></i>
-              Retry Camera
-            </button>
-          )}
-
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-              id="upload-qr"
-              disabled={isLoading}
-            />
-            <label
-              htmlFor="upload-qr"
-              className={`bg-[#161B39] h-12 text-white flex justify-center items-center gap-2 rounded cursor-pointer ${
-                isLoading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              <i className="fa-solid fa-upload"></i>
-              Upload QR Image
-            </label>
-            <p className="text-center mt-2 text-sm text-gray-500">
-              Or upload an image containing a QR code
-            </p>
-          </div>
-        </div>
+        {isScanning && (
+          <button
+            onClick={stopScan}
+            className="bg-[#161B39] hover:opacity-90 text-white px-6 py-2 rounded-lg shadow"
+          >
+            <i className="fa-solid fa-stop mr-2"></i> Stop Scan
+          </button>
+        )}
       </div>
     </div>
   );

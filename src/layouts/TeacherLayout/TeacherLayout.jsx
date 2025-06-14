@@ -91,7 +91,7 @@ export default function TeacherLayout() {
                     {" "}
                     {(localStorage.getItem("userName") &&
                       localStorage.getItem("userName")) ||
-                      "Admin"}
+                      "Teacher"}
                   </p>
                 </div>
               </li>

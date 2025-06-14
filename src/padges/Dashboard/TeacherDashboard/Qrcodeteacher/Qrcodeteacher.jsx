@@ -147,13 +147,6 @@ export default function Qrcodeteacher() {
                   </div>
                 </div>
               </div>
-              <a
-                href={`data:image/png;base64,${qrData}`}
-                download={`qr-code-${Date.now()}.png`}
-                className="mt-4 bg-[#161B39] text-white px-4 py-2 rounded  transition"
-              >
-                Download
-              </a>
             </div>
           )}
         </div>

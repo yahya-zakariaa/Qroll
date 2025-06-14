@@ -202,7 +202,7 @@ export default function Approutes() {
               element={<Profiledoctoer />}
             />
             <Route
-              path="/doctor-dashboard/changepassowreddoctoer"
+              path="/doctor-dashboard/profile/change-password"
               element={<Changepassowreddoctoer />}
             />
             <Route
@@ -250,11 +250,11 @@ export default function Approutes() {
           <Route path="/student-dashboard" element={<StudentLayout />}>
             <Route index element={<StudentDashboard />} />
             <Route
-              path="/student-dashboard/profilestudent"
+              path="/student-dashboard/profile"
               element={<Profilestudent />}
             />
             <Route
-              path="/student-dashboard/profilestudent/changepassworedstudent"
+              path="/student-dashboard/profile/change-password"
               element={<Changepassworedstudent />}
             />
             <Route
@@ -295,7 +295,7 @@ export default function Approutes() {
               element={<Profileteacher />}
             />
             <Route
-              path="/teacher-dashboard/profileteacher/changepasswred"
+              path="/teacher-dashboard/profile/change-password"
               element={<Changepasswred />}
             />
             <Route

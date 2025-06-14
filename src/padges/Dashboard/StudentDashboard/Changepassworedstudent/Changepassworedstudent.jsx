@@ -6,8 +6,8 @@ export default function Changepassworedstudent() {
   const { changePassword } = useStudentStore();
   const handleChangePassword = async (data) => {
     const formData = new FormData();
-    formData.append("old_Password", data.old_password);
-    formData.append("new_password", data.new_password);
+    formData.append("old_Password", data.old_password.trim());
+    formData.append("new_password", data.new_password.trim());
     try {
       await changePassword(formData);
     } catch (error) {

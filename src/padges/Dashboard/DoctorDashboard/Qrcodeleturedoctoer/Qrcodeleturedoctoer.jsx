@@ -148,13 +148,6 @@ export default function Qrcodeleturedoctoer() {
                   </div>
                 </div>
               </div>
-              <a
-                href={`data:image/png;base64,${qrData}`}
-                download="lecture-qr.png"
-                className="mt-4 inline-block bg-[#161B39]  text-white px-4 py-2 rounded-md"
-              >
-                Download
-              </a>
             </div>
           )}
         </div>

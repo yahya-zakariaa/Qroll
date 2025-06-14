@@ -112,7 +112,7 @@ const useStudentStore = create((set) => ({
     } catch (error) {
       console.log("change password error:", error);
       const message = error.response?.data?.message || error.message;
-      console.error("take action Error:", message);
+      console.error("change password error:", message);
       throw message;
     }
   },
