@@ -5,7 +5,7 @@ import useStudentStore from "../../../../store/useStudentStore";
 import toast from "react-hot-toast";
 
 export default function ScanQrCodeStudent() {
-  const { scanLectureQr } = useStudentStore();
+  const { scanQr } = useStudentStore();
   const navigate = useNavigate();
   const { id } = useParams();
   const qrRef = useRef(null);
@@ -38,12 +38,14 @@ export default function ScanQrCodeStudent() {
         throw new Error("Invalid QR code");
       }
 
-      await scanLectureQr(data);
+      await scanQr(data);
       toast.success("Scanned successfully");
       navigate(`/student-dashboard/courses/${id}/scan-done`, {
         state: { success: true, data },
       });
     } catch (err) {
+      console.log(err);
+      
       toast.error(err.message || "Invalid QR code");
       navigate(`/student-dashboard/courses/${id}/scan-done`, {
         state: { success: false, message: err.message || "Scan failed" },
@@ -164,7 +166,7 @@ export default function ScanQrCodeStudent() {
       <div
         id="reader"
         className={`  rounded-lg overflow-hidden border 
-          ${isScanning ? "border-[#161B39] w-[80%] md:w-[400px] md:h-[300px]" : ""} 
+          ${isScanning ? "border-[#161B39] w-[400px] h-[300px] md:w-[400px] md:h-[300px]" : ""} 
           flex items-center justify-center`}
       ></div>
 

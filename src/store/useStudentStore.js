@@ -43,13 +43,11 @@ const useStudentStore = create((set) => ({
       throw message;
     }
   },
-  scanLectureQr: async (data) => {
+  scanQr: async (data) => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
     try {
-      console.log(formData);
       const res = await axios.post("/student/attendance/scan", formData);
-      console.log(res);
       return res.data.message;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
