@@ -137,11 +137,13 @@ export default function Sectionfilterdocter() {
                   <td className="p-2">{item.id}</td>
                   <td className="p-2">{item.name}</td>
                   <td className="p-2">{item.academic_id}</td>
-                  <td className="p-2">{item.date}</td>
+                  <td className="p-2">
+                    {new Date(item.date).toLocaleDateString()}
+                  </td>
                   <td className="p-2">
                     <span
                       className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                        item.status === "present"
+                        item.status !== "Absent"
                           ? "bg-green-100 text-green-700"
                           : "bg-pink-100 text-red-600"
                       }`}

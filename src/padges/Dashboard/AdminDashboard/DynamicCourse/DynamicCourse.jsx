@@ -51,7 +51,7 @@ export default function DynamicCourse() {
           className="mt-1 fa-solid fa-chevron-right"
           style={{ color: "#71717a" }}
         />
-        <h1 className="text-[#71717A] "> {course?.name} </h1>
+        <h1 className="text-[#71717A] "> {courseName} </h1>
       </div>
 
       <div className="md:relative ">
@@ -101,6 +101,7 @@ export default function DynamicCourse() {
             <li>
               <Link
                 to={`/admin-dashboard/courses/${id}/filter`}
+                state={{courseName}}
                 className="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 "
               >
                 <span className="ml-0">

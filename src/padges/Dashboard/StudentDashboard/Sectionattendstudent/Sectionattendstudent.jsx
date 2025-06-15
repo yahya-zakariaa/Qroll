@@ -70,16 +70,16 @@ export default function Sectionattendstudent() {
                   {currentSections.map((item) => (
                     <tr key={item.id} className="border-t">
                       <td className="p-2 ">{item?.section?.id}</td>
+                      <td className="p-2 ">{item?.section?.name}</td>
                       <td className="p-2 ">
-                        {item?.section?.name}
-                      </td>
-                      <td className="p-2 ">
-                        {new Date(item?.section?.created_at).toLocaleDateString()}
+                        {new Date(
+                          item?.section?.created_at
+                        ).toLocaleDateString()}
                       </td>
                       <td className="p-2 text-center ">
                         <span
                           className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                            item.status === "present"
+                            item.status !== "Absent"
                               ? "bg-green-100 text-green-700"
                               : "bg-pink-100 text-red-600"
                           }`}

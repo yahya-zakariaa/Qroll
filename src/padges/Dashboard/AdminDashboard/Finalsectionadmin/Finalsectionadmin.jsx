@@ -55,29 +55,6 @@ export default function Finalsectiondoctoer() {
   return (
     <div>
       <div className="items-center lg:flex lg:justify-between ">
-        <div className="flex gap-2 md:m-3 lg:m-3 justify-self-center max-md:mb-4">
-          <button
-            onClick={() => navigate(-1)}
-            className=" max-md:text-[12px] flex gap-2 items-center  text-[#161B39]"
-          >
-            <i className="fa-solid fa-arrow-left-long" />
-            <h1>BACK</h1>{" "}
-          </button>
-          <h1 className="text-[#71717A] max-md:text-[12px] ">COURCES </h1>
-          <i
-            className="fa-solid fa-chevron-right md:mt-1"
-            style={{ color: "#71717a" }}
-          />
-          <h1 className="text-[#71717A] max-md:text-[12px]"> CS </h1>
-          <i
-            className="fa-solid fa-chevron-right md:mt-1"
-            style={{ color: "#71717a" }}
-          />
-          <h1 className="text-[#71717A] max-md:text-[12px] ">
-            {" "}
-            LECTURE ATTENDENCE REPORT{" "}
-          </h1>
-        </div>
         <div className="flex ">
           <button className=" justify-center items-center flex self-center bg-[#161B39] text-[white] m-2 w-52  rounded-[8px] h-11">
             <img className="h-5" src={addd} alt="" />
@@ -87,7 +64,7 @@ export default function Finalsectiondoctoer() {
                 navigate(`/admin-dashboard/courses/${id}/excessive-absence`)
               }
             >
-              view excessive absence{" "}
+              view excessive absence
             </p>
           </button>
         </div>

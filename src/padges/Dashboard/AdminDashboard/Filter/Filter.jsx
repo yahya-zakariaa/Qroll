@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAdminStore from "./../../../../store/useAdminStore";
 
 export default function Filter() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { courseName } = location.state || {};
   const [lectures, setLectures] = useState([]);
   const [sections, setSections] = useState([]);
   const { getLectures, getSections } = useAdminStore();
@@ -55,7 +57,8 @@ export default function Filter() {
                 <button
                   onClick={() =>
                     navigate(
-                      `/admin-dashboard/courses/${id}/filter/sections/${s.id}`
+                      `/admin-dashboard/courses/${id}/filter/sections/${s.id}`,
+                      { state: { courseName } }
                     )
                   }
                   className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"
@@ -77,7 +80,8 @@ export default function Filter() {
                 <button
                   onClick={() =>
                     navigate(
-                      `/admin-dashboard/courses/${id}/filter/lectures/${l.id}`
+                      `/admin-dashboard/courses/${id}/filter/lectures/${l.id}`,
+                      { state: { courseName } }
                     )
                   }
                   className="w-[20%] h-14 border-[1px] border-[#161B39] hover:bg-[#161B39] hover:text-white transition-all duration-300 font-medium text-[#161B39] rounded-[7px]"

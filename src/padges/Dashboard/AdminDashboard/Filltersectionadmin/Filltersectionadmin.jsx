@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import left from "../../../../assets/Chevron left.png";
 import right from "../../../../assets/Chevron right.png";
@@ -9,6 +9,8 @@ import useAdminStore from "../../../../store/useAdminStore";
 
 export default function Filltersectionadmin() {
   const { cid, sid } = useParams();
+  const location = useLocation();
+  const { courseName } = location.state || {};
   const { getSectionAttendace } = useAdminStore();
   const navigate = useNavigate();
 
@@ -98,7 +100,7 @@ export default function Filltersectionadmin() {
             className="fa-solid fa-chevron-right md:mt-1"
             style={{ color: "#71717a" }}
           />
-          <h1 className="text-[#71717A] max-md:text-[11px]">CS</h1>
+          <h1 className="text-[#71717A] max-md:text-[11px]">{courseName}</h1>
           <i
             className="fa-solid fa-chevron-right md:mt-1"
             style={{ color: "#71717a" }}
@@ -129,7 +131,7 @@ export default function Filltersectionadmin() {
 
       {/* Attendance Table */}
       <div className="px-4">
-        <h2 className="md:text-2xl mb-2">Section 3 Attendance</h2>
+        <h2 className="md:text-2xl mb-2">Section {sid} Attendance</h2>
 
         {/* Search */}
         <div className="w-[90%] my-6">
@@ -168,7 +170,7 @@ export default function Filltersectionadmin() {
                   <td className="p-2">{item.id}</td>
                   <td className="p-2">{item.name}</td>
                   <td className="p-2">{item.academic_id}</td>
-                  <td className="p-2">{item.date}</td>
+                  <td className="p-2">{new Date(item.date).toLocaleDateString()}</td>
                   <td className="p-2">
                     <span
                       className={`px-2 py-1 text-xs font-semibold rounded-full ${
