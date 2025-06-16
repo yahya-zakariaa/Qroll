@@ -6,12 +6,7 @@ export default function Changepassworedstudent() {
   const { changePassword } = useStudentStore();
   const handleChangePassword = async (data) => {
     const formData = new FormData();
-    formData.append("old_password", data.old_password.trim());
-    formData.append("new_password", data.new_password.trim());
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ":" + pair[1]);
-    // }
-
+    formData.append("password", data.password.trim());
     try {
       await changePassword(formData);
     } catch (error) {
@@ -20,8 +15,7 @@ export default function Changepassworedstudent() {
   };
   const formik = useFormik({
     initialValues: {
-      old_password: "",
-      new_password: "",
+      password: "",
     },
     onSubmit: handleChangePassword,
   });
@@ -42,37 +36,16 @@ export default function Changepassworedstudent() {
       <form onSubmit={formik.handleSubmit} className="mx-[5%]">
         <div className="mb-5 md:w-[55%] ">
           <label
-            htmlFor="oldPassword"
+            htmlFor="password"
             className="block mb-2 text-sm font-medium text-gray-900 "
           >
-            {" "}
-            old password
+            enter new password
           </label>
           <input
             type="password"
-            id="oldPassword"
-            name="old_password"
-            value={formik.values.old_password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   focus:ring-1 focus:outline-none h-12 "
-            placeholder="***********************"
-            required
-          />
-        </div>
-        <div className="mb-5 md:w-[55%]  ">
-          <label
-            htmlFor="newPassword"
-            className="block mb-2 text-sm font-medium text-gray-900 "
-          >
-            {" "}
-            new password
-          </label>
-          <input
-            type="password"
-            id="newPassword"
-            name="new_password"
-            value={formik.values.new_password}
+            id="password"
+            name="password"
+            value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   focus:ring-1 focus:outline-none h-12 "

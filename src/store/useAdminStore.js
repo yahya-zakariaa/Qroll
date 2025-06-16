@@ -562,7 +562,6 @@ const useAdminStore = create((set) => ({
   changePassword: async (data) => {
     try {
       const res = await axios.post("/change-password", data);
-      console.log(res);
       toast.success("password reseted successfully");
     } catch (error) {
       console.log("change password error:", error);
